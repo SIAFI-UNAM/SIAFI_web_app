@@ -1,1 +1,115 @@
 @import 'tailwindcss';
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500&display=swap');
+
+
+@layer base {
+  :root {
+    /* Primary Colors */
+    --color-primary: #007AFF;
+    --color-primary-hover: #005DD9;
+    --color-accent: #339BFF;
+    
+    /* Secondary Colors */
+    --color-secondary: #00C2A8;
+    --color-secondary-hover: #009688;
+    
+    /* Base Colors */
+    --color-background: #FFFFFF;
+    --color-surface: #F9FAFB;
+    --color-on-surface: #111827;
+    
+    /* Status Colors */
+    --color-success: #22C55E;
+    --color-warning: #FACC15;
+    --color-error: #EF4444;
+    --color-information: #3B82F6;
+    
+    /* Typography Variables */
+    --font-poppins: 'Poppins', sans-serif;
+    --font-inter: 'Inter', sans-serif;
+    
+    /* Typography Styles */
+    --text-heading-1: 700 48px/1.2 var(--font-poppins);
+    --text-heading-2: 600 36px/1.2 var(--font-poppins);
+    --text-heading-3: 600 28px/1.3 var(--font-poppins);
+    --text-heading-4: 600 22px/1.3 var(--font-poppins);
+    --text-body: 400 16px/1.5 var(--font-inter);
+    --text-body-medium: 500 16px/1.5 var(--font-inter);
+    --text-caption: 400 12px/1.4 var(--font-inter);
+  }
+}
+
+/* Custom Tailwind utilities for SIAFI colors */
+@layer utilities {
+  .bg-siafi-primary { background-color: var(--color-primary); }
+  .bg-siafi-primary-hover { background-color: var(--color-primary-hover); }
+  .bg-siafi-accent { background-color: var(--color-accent); }
+  .bg-siafi-secondary { background-color: var(--color-secondary); }
+  .bg-siafi-secondary-hover { background-color: var(--color-secondary-hover); }
+  .bg-siafi-background { background-color: var(--color-background); }
+  .bg-siafi-surface { background-color: var(--color-surface); }
+  .bg-siafi-on-surface { background-color: var(--color-on-surface); }
+  .bg-siafi-success { background-color: var(--color-success); }
+  .bg-siafi-warning { background-color: var(--color-warning); }
+  .bg-siafi-error { background-color: var(--color-error); }
+  .bg-siafi-information { background-color: var(--color-information); }
+  
+  .text-siafi-primary { color: var(--color-primary); }
+  .text-siafi-primary-hover { color: var(--color-primary-hover); }
+  .text-siafi-accent { color: var(--color-accent); }
+  .text-siafi-secondary { color: var(--color-secondary); }
+  .text-siafi-secondary-hover { color: var(--color-secondary-hover); }
+  .text-siafi-background { color: var(--color-background); }
+  .text-siafi-surface { color: var(--color-surface); }
+  .text-siafi-on-surface { color: var(--color-on-surface); }
+  .text-siafi-success { color: var(--color-success); }
+  .text-siafi-warning { color: var(--color-warning); }
+  .text-siafi-error { color: var(--color-error); }
+  .text-siafi-information { color: var(--color-information); }
+  
+  .border-siafi-primary { border-color: var(--color-primary); }
+  .border-siafi-primary-hover { border-color: var(--color-primary-hover); }
+  .border-siafi-accent { border-color: var(--color-accent); }
+  .border-siafi-secondary { border-color: var(--color-secondary); }
+  .border-siafi-secondary-hover { border-color: var(--color-secondary-hover); }
+  .border-siafi-background { border-color: var(--color-background); }
+  .border-siafi-surface { border-color: var(--color-surface); }
+  .border-siafi-on-surface { border-color: var(--color-on-surface); }
+  .border-siafi-success { border-color: var(--color-success); }
+  .border-siafi-warning { border-color: var(--color-warning); }
+  .border-siafi-error { border-color: var(--color-error); }
+  .border-siafi-information { border-color: var(--color-information); }
+  
+  /* SIAFI Typography utilities */
+  .text-siafi-h1 { 
+    font: var(--text-heading-1);
+    letter-spacing: -0.02em;
+  }
+  .text-siafi-h2 { 
+    font: var(--text-heading-2);
+    letter-spacing: -0.01em;
+  }
+  .text-siafi-h3 { 
+    font: var(--text-heading-3);
+    letter-spacing: -0.01em;
+  }
+  .text-siafi-h4 { 
+    font: var(--text-heading-4);
+    letter-spacing: -0.005em;
+  }
+  .text-siafi-body { 
+    font: var(--text-body);
+  }
+  .text-siafi-body-medium { 
+    font: var(--text-body-medium);
+  }
+  .text-siafi-caption { 
+    font: var(--text-caption);
+    letter-spacing: 0.01em;
+  }
+  
+  /* Font family utilities */
+  .font-siafi-poppins { font-family: var(--font-poppins); }
+  .font-siafi-inter { font-family: var(--font-inter); }
+}
