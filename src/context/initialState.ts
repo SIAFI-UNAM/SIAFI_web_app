@@ -32,6 +32,7 @@ export const getInitialState = (): FormState => {
           learningExpectations: '',
           commitment: '',
           recruitmentSource: '',
+          additionalComments: '',
         },
       };
 }

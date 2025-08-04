@@ -33,6 +33,7 @@ export interface FormData {
     learningExpectations: string;
     commitment: string;
     recruitmentSource: string;
+    additionalComments: string;
   };
 }
 

@@ -6,6 +6,7 @@ import { SiafiLogo } from "../../components/footer";
 import { Footer } from "../../layouts";
 import { useRecruitmentContext } from "../../context/FormContext";
 import { type FormState } from "../../types/FormData";
+import { getInitialState } from "../../context/initialState";
 
 const recruitmentSources = [
   { value: "social-media", label: "Redes sociales" },
@@ -27,7 +28,7 @@ export function MotivationAndExpectationsPage() {
   };
   
   const handleReset = () => {
-    reset();
+    reset(getInitialState());
     localStorage.removeItem('formData');
   }
 
@@ -71,8 +72,15 @@ export function MotivationAndExpectationsPage() {
                 />
             )}
           />
+          <Textarea
+            label="¿Hay algún dato adicional que te gustaría compartir con nosotros?"
+            placeholder="Escribe tu respuesta (opcional)"
+            fullWidth
+            height="large"
+            {...register("motivation.additionalComments")}
+          />
         
-            <div className="mt-8 space-y-3">
+            <div className="pt-4 space-y-3">
                 {submitError && (
                     <div className="text-red-500 text-center p-2 bg-red-100 border border-red-400 rounded">
                     {submitError}
