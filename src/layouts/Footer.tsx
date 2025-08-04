@@ -1,5 +1,7 @@
 import React from 'react';
 import { SiafiLogo } from '../components/footer/SiafiLogo';
+import unamLogo from '../assets/UNAM_logo.svg';
+import fiLogo from '../assets/FI_logo.png';
 
 interface FooterProps {
   className?: string;
@@ -53,15 +55,19 @@ export const Footer: React.FC<FooterProps> = ({
           </p>
         </div>
         
-        <div className="flex gap-2.5 items-center justify-center md:justify-start mt-14">
-          <div className="h-[85px] w-[76px] bg-amber-500 flex items-center justify-center text-white text-xs font-siafi-poppins font-bold rounded-lg shadow-sm" 
-               title="Escudo de la Universidad Nacional Autónoma de México">
-            UNAM
-          </div>
-          <div className="h-24 w-[78px] bg-red-700 flex items-center justify-center text-white text-xs font-siafi-poppins font-bold rounded-lg shadow-sm"
-               title="Logo de la Facultad de Ingeniería UNAM">
-            INGENIERÍA
-          </div>
+        <div className="flex gap-3 items-center justify-center md:justify-start mt-14">
+          <img 
+            src={unamLogo} 
+            alt="Logo UNAM" 
+            className="w-[76px] h-auto"
+            title="Escudo de la Universidad Nacional Autónoma de México"
+          />
+          <img 
+            src={fiLogo} 
+            alt="Logo Facultad de Ingeniería" 
+            className="w-[74px] h-auto"
+            title="Logo de la Facultad de Ingeniería UNAM"
+          />
         </div>
       </div>
     </footer>
