@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { RecruitmentFormProvider } from "../context/FormContext";
 import { AnimatePresence } from "framer-motion";
 import { WelcomePage } from "../pages/recruitment/WelcomePage";
@@ -18,7 +18,6 @@ function AnimatedRoutes() {
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<WelcomePage />} />
         <Route path="/reclutamiento" element={<WelcomePage />} />
 
         <Route element={<RecruitmentLayout />}>
@@ -29,6 +28,8 @@ function AnimatedRoutes() {
           <Route path="/reclutamiento/motivacion-y-expectativas" element={<PageTransition><MotivationAndExpectationsPage /></PageTransition>} />
         </Route>
         <Route path="/reclutamiento/gracias" element={<PageTransition><ThankYouPage /></PageTransition>} />
+        
+        <Route path="*" element={<Navigate to="/reclutamiento" replace />} />
       </Routes>
     </AnimatePresence>
   );
