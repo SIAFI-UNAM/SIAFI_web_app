@@ -12,3 +12,6 @@ export * from './icons/index';
 
 // Notifications
 export * from './notifications';
+
+// Layout Components
+export * from './footer';
