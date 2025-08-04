@@ -1,3 +1,2 @@
-export { Footer } from './Footer';
-
-export { default as FooterDefault } from './Footer';
+export * from './Footer';
+export * from './RecruitmentLayout';
