@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useFormContext, Controller } from "react-hook-form";
+import { useEffect } from "react";
 import { MultipleChoiceTable, type MultipleChoiceOption, type MultipleChoiceRow } from "../../components/tables";
 import { Checkbox } from "../../components/forms/checkbox";
 import { Textarea } from "../../components/forms";
@@ -42,7 +43,7 @@ const developmentAreasOptions = [
 
 export function TechnicalSkillsPage() {
   const navigate = useNavigate();
-  const { register, control, getValues, setValue, watch, formState: { errors } } = useFormContext<FormState>();
+  const { register, control, getValues, setValue, watch, trigger, formState: { errors } } = useFormContext<FormState>();
 
   const skillFieldsToWatch = [
     ...programmingLanguagesRows.map(r => r.id),
@@ -50,10 +51,19 @@ export function TechnicalSkillsPage() {
     ...microcontrollersRows.map(r => r.id)
   ] as (keyof FormState)[];
 
+  useEffect(() => {
+    skillFieldsToWatch.forEach(fieldName => {
+        register(fieldName, { required: "Debes seleccionar un nivel para cada habilidad." });
+    });
+  }, [register, skillFieldsToWatch]);
+
   watch(skillFieldsToWatch);
 
-  const handleContinue = () => {
-    navigate('/reclutamiento/experiencia-y-trayectoria');
+  const handleContinue = async () => {
+    const isValid = await trigger(skillFieldsToWatch);
+    if (isValid) {
+        navigate('/reclutamiento/experiencia-y-trayectoria');
+    }
   };
   
   const handleTableChange = (id: string, value: string) => {
@@ -62,6 +72,13 @@ export function TechnicalSkillsPage() {
       shouldDirty: true,
     });
   };
+
+  const skillErrors = skillFieldsToWatch.some(field => errors[field]);
+  
+  const getSelectedValue = (id: keyof FormState) => {
+    const value = getValues(id);
+    return value === null || value === undefined ? undefined : String(value);
+  }
 
   return (
     <div className="bg-siafi-surface flex flex-col items-center justify-center min-h-screen py-16 px-4 sm:px-6 lg:px-8">
@@ -80,7 +97,7 @@ export function TechnicalSkillsPage() {
             subtitle="Nivel: 0 = Nulo, 5 = Dominado"
             firstColumnLabel="Lenguaje"
             options={skillLevelOptions}
-            rows={programmingLanguagesRows.map(r => ({ ...r, selectedValue: String(getValues(r.id as keyof FormState) || "0") }))}
+            rows={programmingLanguagesRows.map(r => ({ ...r, selectedValue: getSelectedValue(r.id as keyof FormState) }))}
             onChange={(rowId, selectedValue) => handleTableChange(rowId, String(selectedValue))}
           />
 
@@ -89,7 +106,7 @@ export function TechnicalSkillsPage() {
             subtitle="Nivel: 0 = Nulo, 5 = Dominado"
             firstColumnLabel="Tecnología"
             options={skillLevelOptions}
-            rows={devTechRows.map(r => ({ ...r, selectedValue: String(getValues(r.id as keyof FormState) || "0") }))}
+            rows={devTechRows.map(r => ({ ...r, selectedValue: getSelectedValue(r.id as keyof FormState) }))}
             onChange={(rowId, selectedValue) => handleTableChange(rowId, String(selectedValue))}
           />
           
@@ -98,9 +115,10 @@ export function TechnicalSkillsPage() {
             subtitle="Nivel: 0 = Nulo, 5 = Dominado"
             firstColumnLabel="Tecnología"
             options={skillLevelOptions}
-            rows={microcontrollersRows.map(r => ({ ...r, selectedValue: String(getValues(r.id as keyof FormState) || "0") }))}
+            rows={microcontrollersRows.map(r => ({ ...r, selectedValue: getSelectedValue(r.id as keyof FormState) }))}
             onChange={(rowId, selectedValue) => handleTableChange(rowId, String(selectedValue))}
           />
+          {skillErrors && <p className="text-red-500 text-sm mt-1 -translate-y-4 text-center">Debes seleccionar un nivel para cada habilidad en las tablas.</p>}
 
           <Controller
               name="development_areas"
