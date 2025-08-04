@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import type { ReactNode } from 'react';
 import { Table, TableHeader, TableBody, TableRow, TableCell } from './Table';
-import { Badge } from './Badge';
+import { Badge } from '../ui';
 
 export interface DataTableColumn<T = any> {
   key: string;
