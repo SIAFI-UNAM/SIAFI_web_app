@@ -9,3 +9,6 @@ export * from './tables';
 
 // Icons
 export * from './icons/index';
+
+// Notifications
+export * from './notifications';
