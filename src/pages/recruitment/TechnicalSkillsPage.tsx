@@ -94,7 +94,7 @@ export function TechnicalSkillsPage() {
         <form className="space-y-7" onSubmit={(e) => e.preventDefault()}>
           <MultipleChoiceTable
             title="Lenguajes de Programación"
-            subtitle="Nivel: 0 = Nulo, 5 = Dominado"
+            subtitle="Nivel de habilidad: 0 = Nulo, 1 = Básico, 2 = Inicial, 3 = Intermedio, 4 = Avanzado, 5 = Dominado"
             firstColumnLabel="Lenguaje"
             options={skillLevelOptions}
             rows={programmingLanguagesRows.map(r => ({ ...r, selectedValue: getSelectedValue(r.id as keyof FormState) }))}
@@ -103,7 +103,7 @@ export function TechnicalSkillsPage() {
 
           <MultipleChoiceTable
             title="Tecnologías de desarrollo"
-            subtitle="Nivel: 0 = Nulo, 5 = Dominado"
+            subtitle="Nivel de habilidad: 0 = Nulo, 1 = Básico, 2 = Inicial, 3 = Intermedio, 4 = Avanzado, 5 = Dominado"
             firstColumnLabel="Tecnología"
             options={skillLevelOptions}
             rows={devTechRows.map(r => ({ ...r, selectedValue: getSelectedValue(r.id as keyof FormState) }))}
@@ -112,7 +112,7 @@ export function TechnicalSkillsPage() {
           
           <MultipleChoiceTable
             title="Microcontroladores"
-            subtitle="Nivel: 0 = Nulo, 5 = Dominado"
+            subtitle="Nivel de habilidad: 0 = Nulo, 1 = Básico, 2 = Inicial, 3 = Intermedio, 4 = Avanzado, 5 = Dominado"
             firstColumnLabel="Tecnología"
             options={skillLevelOptions}
             rows={microcontrollersRows.map(r => ({ ...r, selectedValue: getSelectedValue(r.id as keyof FormState) }))}
@@ -125,8 +125,8 @@ export function TechnicalSkillsPage() {
               control={control}
               render={({ field }) => (
                   <div>
-                      <h3 className="text-siafi-body font-bold text-gray-700">¿Áreas de desarrollo de interés? (Opcional)</h3>
-                      <p className="text-siafi-body italic text-gray-700 mb-4">(Puedes seleccionar más de una)</p>
+                      <h3 className="text-siafi-body-bold font-bold text-gray-700">¿Áreas de desarrollo de interés? (Opcional)</h3>
+                      <p className="font-normal italic text-gray-700 mb-4">(Puedes seleccionar más de una)</p>
                       <div className="space-y-4">
                       {developmentAreasOptions.map(area => (
                           <Checkbox
