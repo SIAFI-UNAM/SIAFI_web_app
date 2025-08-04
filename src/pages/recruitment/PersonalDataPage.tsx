@@ -130,10 +130,13 @@ export function PersonalDataPage() {
                         maxSize: (file: File | null) => !file || file.size <= 10 * 1024 * 1024 || "El archivo no debe pesar más de 10MB."
                     }
                 }}
-                render={({ field: { onChange, onBlur, name, ref } }) => (
+                render={({ field: { onChange, value, name, ref } }) => (
                     <FileInput
-                        name={name}
                         label="Sube tu CV en PDF"
+                        name={name}
+                        value={value}
+                        onChange={onChange}
+                        ref={ref}
                     />
                 )}
             />

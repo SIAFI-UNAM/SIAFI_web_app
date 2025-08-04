@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, type ReactNode } from 'react';
-import { useForm, FormProvider as RHFFormProvider, type UseFormReturn } from 'react-hook-form';
+import { useForm, FormProvider as RHFFormProvider, type UseFormReturn, useFormContext } from 'react-hook-form';
 import { type FormState } from '../types/FormData';
 import { getInitialState } from './initialState';
 
@@ -36,14 +36,28 @@ export const RecruitmentFormProvider: React.FC<{ children: ReactNode }> = ({ chi
 
   const { watch, reset } = methods;
 
+  // Efecto para cargar los datos desde localStorage al iniciar
   useEffect(() => {
     const savedData = loadFormData();
+    // Nos aseguramos de que el campo del CV esté siempre vacío al cargar
+    if (savedData.personalData) {
+      savedData.personalData.cv = null;
+    }
     reset(savedData);
   }, [reset]);
 
+  // Efecto para guardar los datos en localStorage al cambiar
   useEffect(() => {
     const subscription = watch((value) => {
-      localStorage.setItem('formData', JSON.stringify(value));
+      // Usamos una copia profunda para no afectar el estado real del formulario
+      const dataToStore = JSON.parse(JSON.stringify(value));
+      
+      // Nunca guardamos el archivo en localStorage
+      if (dataToStore.personalData) {
+        dataToStore.personalData.cv = null;
+      }
+      
+      localStorage.setItem('formData', JSON.stringify(dataToStore));
     });
     return () => subscription.unsubscribe();
   }, [watch]);
@@ -51,19 +65,35 @@ export const RecruitmentFormProvider: React.FC<{ children: ReactNode }> = ({ chi
   const submitForm = async (data: FormState) => {
     setIsSubmitting(true);
     setSubmitError(null);
+    
+    // Usamos FormData para enviar correctamente el archivo
+    const formDataToSend = new FormData();
+    if (data.personalData.cv) {
+      formDataToSend.append('cv', data.personalData.cv);
+    }
+
+    // Adjuntamos el resto de los datos como JSON
+    Object.entries(data).forEach(([section, sectionData]) => {
+      if (section === 'personalData') {
+        const { cv, ...rest } = sectionData;
+        formDataToSend.append('personalData', JSON.stringify(rest));
+      } else {
+        formDataToSend.append(section, JSON.stringify(sectionData));
+      }
+    });
+
     try {
       const response = await fetch('https://api.example.com/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+        body: formDataToSend, // No establecer 'Content-Type', el navegador lo hace por nosotros
       });
 
       if (response.ok) {
         reset(getInitialState());
         localStorage.removeItem('formData');
       } else {
-        const errorData = await response.json().catch(() => ({ message: 'Failed to submit form' }));
-        setSubmitError(errorData.message || 'Ocurrió un error al enviar.');
+        const errorData = await response.json().catch(() => ({ message: 'Error al enviar el formulario' }));
+        setSubmitError(errorData.message);
       }
     } catch (error: any) {
       setSubmitError(error.message || 'Error de red. Inténtalo de nuevo.');
@@ -82,8 +112,12 @@ export const RecruitmentFormProvider: React.FC<{ children: ReactNode }> = ({ chi
 };
 
 export const useRecruitmentForm = (): UseFormReturn<FormState> => {
-  return useContext(RecruitmentFormContext as any); 
-};
+    const context = useFormContext<FormState>();
+    if (!context) {
+      throw new Error('useRecruitmentForm must be used within a RecruitmentFormProvider');
+    }
+    return context;
+  };
 
 export const useRecruitmentContext = () => {
   const context = useContext(RecruitmentFormContext);
