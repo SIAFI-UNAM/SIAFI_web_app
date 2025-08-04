@@ -4,6 +4,7 @@ import { Textarea } from "../../components/forms";
 import { Button } from "../../components/ui";
 import { SiafiLogo } from "../../components/footer";
 import { Footer } from "../../layouts";
+import { useNavigate } from "react-router-dom";
 
 const programmingLanguagesRows = [
   { label: "Python", name: "python-skill", options: [{value: "0", label: ""}, {value: "1", label: ""}, {value: "2", label: ""}, {value: "3", label: ""}, {value: "4", label: ""}, {value: "5", label: ""}] },
@@ -32,6 +33,8 @@ const microcontrollersRows = [
 
 
 export function TechnicalSkillsPage() {
+  const navigate = useNavigate();
+
   return (
     <div className="bg-siafi-surface flex flex-col items-center justify-center min-h-screen py-10 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-2xl">
@@ -98,10 +101,10 @@ export function TechnicalSkillsPage() {
         </form>
 
         <div className="mt-8 space-y-3">
-          <Button variant="primary" fullWidth>
+          <Button variant="primary" fullWidth onClick={() => navigate('/reclutamiento/experiencia-y-trayectoria')}>
             Continuar
           </Button>
-          <Button variant="secondary" fullWidth>
+          <Button variant="secondary" fullWidth onClick={() => navigate('/reclutamiento/preferencias-y-participacion')}>
             Regresar
           </Button>
         </div>

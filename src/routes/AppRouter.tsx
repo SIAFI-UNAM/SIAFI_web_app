@@ -5,12 +5,14 @@ import { PreferencesAndParticipationPage } from '../pages/recruitment/Preference
 import { TechnicalSkillsPage } from '../pages/recruitment/TechnicalSkillsPage'
 import { ExperienceAndTrackRecordPage } from '../pages/recruitment/ExperienceAndTrackRecordPage'
 import { MotivationAndExpectationsPage } from '../pages/recruitment/MotivationAndExpectationsPage'
+import { WelcomePage } from '../pages/recruitment/WelcomePage'
 
 export function AppRouter() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<App />} />
+        <Route path="/reclutamiento" element={<WelcomePage />} />
         <Route path="/reclutamiento/informacion-personal" element={<PersonalDataPage />} />
         <Route path="/reclutamiento/preferencias-y-participacion" element={<PreferencesAndParticipationPage />} />
         <Route path="/reclutamiento/habilidades-tecnicas" element={<TechnicalSkillsPage />} />

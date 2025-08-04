@@ -2,8 +2,11 @@ import { Input } from "../../components/forms"
 import { Button } from "../../components/ui"
 import { SiafiLogo } from "../../components/footer"
 import { Footer } from "../../layouts"
+import { useNavigate } from "react-router-dom"
 
 export function PersonalDataPage() {
+  const navigate = useNavigate()
+
   return (
     <div className="bg-siafi-surface flex flex-col items-center justify-center min-h-screen py-10 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md">
@@ -47,12 +50,14 @@ export function PersonalDataPage() {
           <Button
             variant="primary"
             fullWidth
+            onClick={() => navigate('/reclutamiento/preferencias-y-participacion')}
           >
             Continuar
           </Button>
           <Button
             variant="secondary"
             fullWidth
+            onClick={() => navigate('/reclutamiento')}
           >
             Regresar
           </Button>
