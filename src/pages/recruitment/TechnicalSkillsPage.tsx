@@ -63,7 +63,7 @@ export function TechnicalSkillsPage() {
             render={({ field }) => (
               <MultipleChoiceTable
                 title="Lenguajes de Programación"
-                subtitle="Nivel: 0=Nulo, 5=Dominado"
+                subtitle="Nivel de habilidad: 0 = Nulo, 1 = Básico, 2 = Inicial, 3 = Intermedio, 4 = Avanzado, 5 = Dominado"
                 firstColumnLabel="Lenguaje"
                 options={skillLevelOptions}
                 rows={programmingLanguagesRows.map(row => ({
@@ -81,7 +81,7 @@ export function TechnicalSkillsPage() {
             render={({ field }) => (
                 <MultipleChoiceTable
                     title="Tecnologías de desarrollo"
-                    subtitle="Nivel: 0=Nulo, 5=Dominado"
+                    subtitle="Nivel de habilidad: 0 = Nulo, 1 = Básico, 2 = Inicial, 3 = Intermedio, 4 = Avanzado, 5 = Dominado"
                     firstColumnLabel="Tecnología"
                     options={skillLevelOptions}
                     rows={devTechRows.map(row => ({
@@ -99,7 +99,7 @@ export function TechnicalSkillsPage() {
                 render={({ field }) => (
                     <MultipleChoiceTable
                         title="Tecnologías de Desarrollo (Microcontroladores)"
-                        subtitle="Nivel: 0=Nulo, 5=Dominado"
+                        subtitle="Nivel de habilidad: 0 = Nulo, 1 = Básico, 2 = Inicial, 3 = Intermedio, 4 = Avanzado, 5 = Dominado"
                         firstColumnLabel="Tecnología"
                         options={skillLevelOptions}
                         rows={microcontrollersRows.map(row => ({

@@ -84,8 +84,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(({
   ].filter(Boolean).join(' ');
 
   const labelClasses = [
-    'font-bold',
-    'text-siafi-body',
+    'text-siafi-body-bold',
     'text-gray-700',
     fullWidth ? 'w-full' : 'w-[408px]',
   ].join(' ');

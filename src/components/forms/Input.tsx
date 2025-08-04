@@ -86,8 +86,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
   ].filter(Boolean).join(' ');
 
   const labelClasses = [
-    'font-bold',
-    'text-siafi-body',
+    'text-siafi-body-bold',
     'text-gray-700',
   ].join(' ');
 

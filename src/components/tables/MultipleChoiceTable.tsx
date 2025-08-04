@@ -63,12 +63,12 @@ export const MultipleChoiceTable = forwardRef<HTMLDivElement, MultipleChoiceTabl
       {(title || subtitle) && (
         <div className="w-full">
           {title && (
-            <h3 className="text-siafi-body font-bold text-gray-700 mb-0">
+            <h3 className="text-siafi-body-bold font-bold text-gray-700 mb-0">
               {title}
             </h3>
           )}
           {subtitle && (
-            <p className="text-siafi-body font-normal italic text-gray-700 mt-1">
+            <p className="font-normal italic text-gray-700 mt-1">
               {subtitle}
             </p>
           )}

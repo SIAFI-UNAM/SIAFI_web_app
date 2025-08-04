@@ -36,8 +36,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
   ].join(' ');
 
   const titleClasses = [
-    'font-bold',
-    'text-siafi-body',
+    'text-siafi-body-bold',
     'text-gray-700',
     titleClassName,
   ].join(' ');

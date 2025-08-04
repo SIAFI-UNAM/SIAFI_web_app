@@ -39,7 +39,7 @@ export function PreferencesAndParticipationPage() {
               rules={{ required: "Debes seleccionar al menos un área de interés." }}
               render={({ field }) => (
                 <div>
-                  <label className="text-siafi-body text-gray-700 font-bold">
+                  <label className="text-siafi-body-bold text-gray-700">
                     ¿En qué núcleo te gustaría colaborar?
                     <span className="font-normal italic"> (Puedes seleccionar más de uno)</span>
                   </label>
