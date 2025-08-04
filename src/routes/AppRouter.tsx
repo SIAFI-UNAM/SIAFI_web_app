@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import App from '../App'
 import { PersonalDataPage } from '../pages/recruitment/PersonalDataPage'
 import { PreferencesAndParticipationPage } from '../pages/recruitment/PreferencesAndParticipationPage'
@@ -18,6 +18,7 @@ export function AppRouter() {
         <Route path="/reclutamiento/habilidades-tecnicas" element={<TechnicalSkillsPage />} />
         <Route path="/reclutamiento/experiencia-y-trayectoria" element={<ExperienceAndTrackRecordPage />} />
         <Route path="/reclutamiento/motivacion-y-expectativas" element={<MotivationAndExpectationsPage />} />
+        <Route path="*" element={<Navigate to="/reclutamiento" replace />} />
       </Routes>
     </Router>
   )
