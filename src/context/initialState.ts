@@ -1,38 +1,43 @@
 import { type FormState } from '../types/FormData';
 
 export const getInitialState = (): FormState => {
-    return {
-        personalData: {
-          name: '',
-          lastName: '',
-          phoneNumber: '',
-          email: '',
-          studentId: '',
-          semester: null,
-          career: '',
-          cv: null,
-        },
-        preferences: {
-          interestedAreas: [],
-          participationReason: '',
-        },
-        technicalSkills: {
-          programmingLanguages: {},
-          devTechnologies: {},
-          microcontrollers: {},
-          developmentAreas: [],
-          otherSkillsDetails: '',
-          otherTools: '',
-        },
-        experience: {
-          previousExperience: '',
-          projects: '',
-        },
-        motivation: {
-          learningExpectations: '',
-          commitment: '',
-          recruitmentSource: '',
-          additionalComments: '',
-        },
-      };
-}
+  return {
+    recruitment_event_id: 1, // O el ID que corresponda
+    name: '',
+    lastname: '',
+    phone_number: '',
+    email: '',
+    major: '',
+    semester: null,
+    contribution_text: '',
+    soft_skills_text: '',
+    proud_moment_text: '',
+    team_inspiration_text: '',
+    why_join_text: '',
+    how_found_us_text: '',
+    expectations_text: '',
+    selected_nuclei: [],
+    additional_info_text: '',
+    other_skills_text: '',
+    previous_experience_text: '',
+    skill_csharp: 0,
+    skill_c: 0,
+    skill_cpp: 0,
+    skill_java: 0,
+    skill_javascript: 0,
+    skill_python: 0,
+    skill_tensorflow_keras: 0,
+    skill_pytorch: 0,
+    skill_scikit_learn: 0,
+    skill_opencv: 0,
+    skill_linux: 0,
+    skill_ros_docker: 0,
+    skill_raspberry: 0,
+    skill_esp32: 0,
+    skill_arduino: 0,
+    skill_tiva: 0,
+    development_areas: [],
+    detailed_experience_text: '',
+    cv: null,
+  };
+};

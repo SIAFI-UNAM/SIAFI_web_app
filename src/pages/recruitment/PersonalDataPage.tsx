@@ -12,14 +12,13 @@ export function PersonalDataPage() {
 
   const handleContinue = async () => {
     const isValid = await trigger([
-      "personalData.name",
-      "personalData.lastName",
-      "personalData.phoneNumber",
-      "personalData.email",
-      "personalData.studentId",
-      "personalData.career",
-      "personalData.semester",
-      "personalData.cv"
+      "name",
+      "lastname",
+      "phone_number",
+      "email",
+      "major",
+      "semester",
+      "cv"
     ]);
     if (isValid) {
       navigate('/reclutamiento/preferencias-y-participacion');
@@ -43,18 +42,28 @@ export function PersonalDataPage() {
               label="Nombre(s)"
               placeholder="Tu nombre"
               fullWidth
-              {...register("personalData.name", { required: "El nombre es obligatorio." })}
+              {...register("name", { 
+                required: "El nombre es obligatorio.",
+                minLength: { value: 1, message: "El nombre debe tener al menos 1 caracter." },
+                maxLength: { value: 100, message: "El nombre no debe exceder los 100 caracteres." },
+                pattern: { value: /^[a-zA-ZÀ-ÿ\s]+$/, message: "Solo se permiten letras y espacios." }
+              })}
             />
-            {errors.personalData?.name && <p className="text-red-500 text-sm mt-1">{errors.personalData.name.message}</p>}
+            {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
           </div>
           <div>
             <Input
               label="Apellido(s)"
               placeholder="Tu apellido"
               fullWidth
-              {...register("personalData.lastName", { required: "El apellido es obligatorio." })}
+              {...register("lastname", { 
+                required: "El apellido es obligatorio.",
+                minLength: { value: 1, message: "El apellido debe tener al menos 1 caracter." },
+                maxLength: { value: 100, message: "El apellido no debe exceder los 100 caracteres." },
+                pattern: { value: /^[a-zA-ZÀ-ÿ\s]+$/, message: "Solo se permiten letras y espacios." }
+              })}
             />
-            {errors.personalData?.lastName && <p className="text-red-500 text-sm mt-1">{errors.personalData.lastName.message}</p>}
+            {errors.lastname && <p className="text-red-500 text-sm mt-1">{errors.lastname.message}</p>}
           </div>
           <div>
             <Input
@@ -62,15 +71,13 @@ export function PersonalDataPage() {
               placeholder=""
               fullWidth
               type="tel"
-              {...register("personalData.phoneNumber", { 
-                  required: "El número de teléfono es obligatorio.",
-                  pattern: {
-                      value: /^[0-9]{10}$/,
-                      message: "Ingresa un número de 10 dígitos."
-                  }
+              {...register("phone_number", { 
+                required: "El número de teléfono es obligatorio.",
+                minLength: { value: 10, message: "Debe tener al menos 10 dígitos." },
+                pattern: { value: /^\+?[\d\s\-()]{10,}$/, message: "Formato de teléfono no válido." }
               })}
             />
-            {errors.personalData?.phoneNumber && <p className="text-red-500 text-sm mt-1">{errors.personalData.phoneNumber.message}</p>}
+            {errors.phone_number && <p className="text-red-500 text-sm mt-1">{errors.phone_number.message}</p>}
           </div>
           <div>
             <Input
@@ -78,33 +85,25 @@ export function PersonalDataPage() {
               placeholder="tu.correo@dominio.com"
               fullWidth
               type="email"
-              {...register("personalData.email", { 
-                  required: "El correo es obligatorio.",
-                  pattern: {
-                      value: /\S+@\S+\.\S+/,
-                      message: "El formato del correo no es válido."
-                  }
+              {...register("email", { 
+                required: "El correo es obligatorio.",
+                pattern: { value: /\S+@\S+\.\S+/, message: "El formato del correo no es válido." }
               })}
             />
-            {errors.personalData?.email && <p className="text-red-500 text-sm mt-1">{errors.personalData.email.message}</p>}
-          </div>
-          <div>
-            <Input
-              label="Número de cuenta"
-              placeholder="31..."
-              fullWidth
-              {...register("personalData.studentId", { required: "El número de cuenta es obligatorio." })}
-            />
-            {errors.personalData?.studentId && <p className="text-red-500 text-sm mt-1">{errors.personalData.studentId.message}</p>}
+            {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
           </div>
           <div>
             <Input
               label="Carrera"
               placeholder="Ingeniería en Computación"
               fullWidth
-              {...register("personalData.career", { required: "La carrera es obligatoria." })}
+              {...register("major", { 
+                required: "La carrera es obligatoria.",
+                minLength: { value: 1, message: "La carrera debe tener al menos 1 caracter." },
+                maxLength: { value: 200, message: "La carrera no debe exceder los 200 caracteres." }
+              })}
             />
-            {errors.personalData?.career && <p className="text-red-500 text-sm mt-1">{errors.personalData.career.message}</p>}
+            {errors.major && <p className="text-red-500 text-sm mt-1">{errors.major.message}</p>}
           </div>
           <div>
             <Input
@@ -112,17 +111,19 @@ export function PersonalDataPage() {
               placeholder="7"
               fullWidth
               type="number"
-              {...register("personalData.semester", { 
-                  required: "El semestre es obligatorio.",
-                  valueAsNumber: true 
+              {...register("semester", { 
+                required: "El semestre es obligatorio.",
+                valueAsNumber: true,
+                min: { value: 1, message: "El semestre debe ser al menos 1." },
+                max: { value: 20, message: "El semestre no debe ser mayor a 20." }
               })}
             />
-            {errors.personalData?.semester && <p className="text-red-500 text-sm mt-1">{errors.personalData.semester.message}</p>}
+            {errors.semester && <p className="text-red-500 text-sm mt-1">{errors.semester.message}</p>}
           </div>
           <div>
             <Controller
                 control={control}
-                name="personalData.cv"
+                name="cv"
                 rules={{ 
                     required: "Tu CV en PDF es obligatorio.",
                     validate: {
@@ -140,7 +141,7 @@ export function PersonalDataPage() {
                     />
                 )}
             />
-            {errors.personalData?.cv && <p className="text-red-500 text-sm mt-1">{errors.personalData.cv.message}</p>}
+            {errors.cv && <p className="text-red-500 text-sm mt-1">{errors.cv.message}</p>}
           </div>
         </form>
 

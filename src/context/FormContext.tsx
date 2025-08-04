@@ -16,8 +16,16 @@ const loadFormData = (): FormState => {
     const storedData = localStorage.getItem('formData');
     if (storedData) {
       const parsed = JSON.parse(storedData);
-      if (Object.keys(parsed).length > 0) {
-        return parsed;
+      // Validar que el objeto parseado no esté vacío.
+      if (parsed && typeof parsed === 'object' && Object.keys(parsed).length > 0) {
+        // Asegurarse de que los campos opcionales que son arreglos no sean `undefined`.
+        const initialState = getInitialState();
+        return {
+          ...initialState,
+          ...parsed,
+          selected_nuclei: parsed.selected_nuclei || [],
+          development_areas: parsed.development_areas || [],
+        };
       }
     }
   } catch (error) {
@@ -40,9 +48,7 @@ export const RecruitmentFormProvider: React.FC<{ children: ReactNode }> = ({ chi
   useEffect(() => {
     const savedData = loadFormData();
     // Nos aseguramos de que el campo del CV esté siempre vacío al cargar
-    if (savedData.personalData) {
-      savedData.personalData.cv = null;
-    }
+    savedData.cv = null;
     reset(savedData);
   }, [reset]);
 
@@ -53,9 +59,7 @@ export const RecruitmentFormProvider: React.FC<{ children: ReactNode }> = ({ chi
       const dataToStore = JSON.parse(JSON.stringify(value));
       
       // Nunca guardamos el archivo en localStorage
-      if (dataToStore.personalData) {
-        dataToStore.personalData.cv = null;
-      }
+      dataToStore.cv = null;
       
       localStorage.setItem('formData', JSON.stringify(dataToStore));
     });
@@ -65,27 +69,25 @@ export const RecruitmentFormProvider: React.FC<{ children: ReactNode }> = ({ chi
   const submitForm = async (data: FormState) => {
     setIsSubmitting(true);
     setSubmitError(null);
-    
-    // Usamos FormData para enviar correctamente el archivo
+
     const formDataToSend = new FormData();
-    if (data.personalData.cv) {
-      formDataToSend.append('cv', data.personalData.cv);
+    
+    // Adjuntamos el CV si existe
+    if (data.cv) {
+      formDataToSend.append('cv', data.cv);
     }
 
-    // Adjuntamos el resto de los datos como JSON
-    Object.entries(data).forEach(([section, sectionData]) => {
-      if (section === 'personalData') {
-        const { cv, ...rest } = sectionData;
-        formDataToSend.append('personalData', JSON.stringify(rest));
-      } else {
-        formDataToSend.append(section, JSON.stringify(sectionData));
-      }
-    });
+    // Creamos una copia de los datos y eliminamos el CV para no enviarlo en el JSON
+    const dataToSend: FormState = { ...data };
+    delete (dataToSend as any).cv;
+
+    // Adjuntamos el resto de los datos como un solo objeto JSON
+    formDataToSend.append('jsonData', JSON.stringify(dataToSend));
 
     try {
       const response = await fetch('https://api.example.com/submit', {
         method: 'POST',
-        body: formDataToSend, // No establecer 'Content-Type', el navegador lo hace por nosotros
+        body: formDataToSend,
       });
 
       if (response.ok) {

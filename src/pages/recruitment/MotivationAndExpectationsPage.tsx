@@ -9,18 +9,18 @@ import { type FormState } from "../../types/FormData";
 import { getInitialState } from "../../context/initialState";
 
 const recruitmentSources = [
-  { value: "social-media", label: "Redes sociales" },
-  { value: "email", label: "Correo institucional" },
-  { value: "poster", label: "Cartel en la Facultad" },
-  { value: "class", label: "Un profesor/a lo mencionó" },
-  { value: "event", label: "Evento de SIAFI" },
-  { value: "fair", label: "Feria de asociaciones" },
-  { value: "other", label: "Otro" },
+  { value: "redes_sociales", label: "Redes sociales" },
+  { value: "correo_institucional", label: "Correo institucional" },
+  { value: "cartel_facultad", label: "Cartel en la Facultad" },
+  { value: "mencion_profesor", label: "Un profesor/a lo mencionó" },
+  { value: "evento_siafi", label: "Evento de SIAFI" },
+  { value: "feria_asociaciones", label: "Feria de asociaciones" },
+  { value: "otro", label: "Otro" },
 ];
 
 export function MotivationAndExpectationsPage() {
   const navigate = useNavigate();
-  const { register, control, handleSubmit: handleRHFSubmit, reset } = useFormContext<FormState>();
+  const { register, control, handleSubmit: handleRHFSubmit, reset, formState: { errors } } = useFormContext<FormState>();
   const { submitForm, isSubmitting, submitError } = useRecruitmentContext();
 
   const onFormSubmit = (data: FormState) => {
@@ -49,17 +49,29 @@ export function MotivationAndExpectationsPage() {
             placeholder="Escribe tu respuesta"
             fullWidth
             height="large"
-            {...register("motivation.learningExpectations", { required: "Este campo es obligatorio." })}
+            {...register("why_join_text", {
+              required: "Este campo es obligatorio.",
+              minLength: { value: 10, message: "La respuesta debe tener al menos 10 caracteres." },
+              maxLength: { value: 1000, message: "La respuesta no debe exceder los 1000 caracteres." }
+            })}
           />
+          {errors.why_join_text && <p className="text-red-500 text-sm mt-1">{errors.why_join_text.message}</p>}
+
           <Textarea
             label="¿Cuáles son tus expectativas al unirte a SIAFI?"
             placeholder="Escribe tu respuesta"
             fullWidth
             height="large"
-            {...register("motivation.commitment", { required: "Este campo es obligatorio." })}
+            {...register("expectations_text", {
+              required: "Este campo es obligatorio.",
+              minLength: { value: 10, message: "La respuesta debe tener al menos 10 caracteres." },
+              maxLength: { value: 1000, message: "La respuesta no debe exceder los 1000 caracteres." }
+            })}
           />
+          {errors.expectations_text && <p className="text-red-500 text-sm mt-1">{errors.expectations_text.message}</p>}
+
           <Controller
-            name="motivation.recruitmentSource"
+            name="how_found_us_text"
             control={control}
             rules={{ required: "Por favor, selecciona una opción." }}
             render={({ field }) => (
@@ -72,13 +84,18 @@ export function MotivationAndExpectationsPage() {
                 />
             )}
           />
+          {errors.how_found_us_text && <p className="text-red-500 text-sm mt-1">{errors.how_found_us_text.message}</p>}
+          
           <Textarea
-            label="¿Hay algún dato adicional que te gustaría compartir con nosotros?"
-            placeholder="Escribe tu respuesta (opcional)"
+            label="Si tienes algún otro comentario, déjalo aquí (Opcional)"
+            placeholder="Escribe tu respuesta"
             fullWidth
             height="large"
-            {...register("motivation.additionalComments")}
+            {...register("additional_info_text", {
+              maxLength: { value: 1000, message: "No exceder 1000 caracteres." },
+            })}
           />
+          {errors.additional_info_text && <p className="text-red-500 text-sm mt-1">{errors.additional_info_text.message}</p>}
         
             <div className="pt-4 space-y-3">
                 {submitError && (

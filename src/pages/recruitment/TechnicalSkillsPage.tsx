@@ -14,35 +14,53 @@ const skillLevelOptions: MultipleChoiceOption[] = [
 ];
 
 const programmingLanguagesRows: MultipleChoiceRow[] = [
-  { id: "python", label: "Python" }, { id: "javascript", label: "JavaScript" },
-  { id: "typescript", label: "TypeScript" }, { id: "c-cpp", label: "C/C++" },
-  { id: "csharp", label: "C#" }, { id: "java", label: "Java" },
+  { id: "skill_python", label: "Python" }, { id: "skill_javascript", label: "JavaScript" },
+  { id: "skill_c", label: "C" }, { id: "skill_cpp", label: "C++" },
+  { id: "skill_csharp", label: "C#" }, { id: "skill_java", label: "Java" },
 ];
 
 const devTechRows: MultipleChoiceRow[] = [
-    { id: "pytorch", label: "PyTorch" }, { id: "tensorflow", label: "Tensorflow/Keras" },
-    { id: "scikit-learn", label: "Scikit-Learn" }, { id: "opencv", label: "OpenCV" },
-    { id: "linux", label: "Linux" }, { id: "ros", label: "ROS" },
+    { id: "skill_pytorch", label: "PyTorch" }, { id: "skill_tensorflow_keras", label: "Tensorflow/Keras" },
+    { id: "skill_scikit_learn", label: "Scikit-Learn" }, { id: "skill_opencv", label: "OpenCV" },
+    { id: "skill_linux", label: "Linux" }, { id: "skill_ros_docker", label: "ROS/Docker" },
 ];
 
 const microcontrollersRows: MultipleChoiceRow[] = [
-    { id: "raspberry-pi", label: "Raspberry Pi" }, { id: "esp32", label: "ESP32" },
-    { id: "tiva", label: "Tiva" }, { id: "tm4c", label: "TM4C1294NCPDT" },
+    { id: "skill_raspberry", label: "Raspberry Pi" }, { id: "skill_esp32", label: "ESP32" },
+    { id: "skill_tiva", label: "Tiva" }, { id: "skill_arduino", label: "Arduino" },
 ];
 
-const developmentAreas = [
-    "Desarrollo Frontend", "Desarrollo Backend", "DevOps/MLOps/Infraestructura",
-    "Desarrollo móvil", "Desarrollo de modelos de IA (modelos de ML o redes neuronales)",
-    "Despliegue de modelos o integración de APIs de modelos del mercado", "Otro"
+const developmentAreasOptions = [
+    { id: "desarrollo_frontend", label: "Desarrollo Frontend" }, 
+    { id: "desarrollo_backend", label: "Desarrollo Backend" }, 
+    { id: "devops_mlops_infraestructura", label: "DevOps/MLOps/Infraestructura" },
+    { id: "desarrollo_movil", label: "Desarrollo móvil" }, 
+    { id: "desarrollo_modelos_ia", label: "Desarrollo de modelos de IA (modelos de ML o redes neuronales)" },
+    { id: "despliegue_modelos_integracion", label: "Despliegue de modelos o integración de APIs de modelos del mercado" }, 
+    { id: "otros", label: "Otro" }
 ];
 
 export function TechnicalSkillsPage() {
   const navigate = useNavigate();
-  const { register, control, trigger, formState: { errors } } = useFormContext<FormState>();
+  const { register, control, getValues, setValue, watch, formState: { errors } } = useFormContext<FormState>();
 
-  const handleContinue = async () => {
-    // Se pueden añadir validaciones si es necesario aquí
+  const skillFieldsToWatch = [
+    ...programmingLanguagesRows.map(r => r.id),
+    ...devTechRows.map(r => r.id),
+    ...microcontrollersRows.map(r => r.id)
+  ] as (keyof FormState)[];
+
+  watch(skillFieldsToWatch);
+
+  const handleContinue = () => {
     navigate('/reclutamiento/experiencia-y-trayectoria');
+  };
+  
+  const handleTableChange = (id: string, value: string) => {
+    setValue(id as keyof FormState, parseInt(value, 10), {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
   };
 
   return (
@@ -57,101 +75,70 @@ export function TechnicalSkillsPage() {
         </div>
 
         <form className="space-y-7" onSubmit={(e) => e.preventDefault()}>
-          <Controller
-            name="technicalSkills.programmingLanguages"
-            control={control}
-            render={({ field }) => (
-              <MultipleChoiceTable
-                title="Lenguajes de Programación"
-                subtitle="Nivel de habilidad: 0 = Nulo, 1 = Básico, 2 = Inicial, 3 = Intermedio, 4 = Avanzado, 5 = Dominado"
-                firstColumnLabel="Lenguaje"
-                options={skillLevelOptions}
-                rows={programmingLanguagesRows.map(row => ({
-                    ...row,
-                    selectedValue: field.value?.[row.id],
-                }))}
-                onChange={(rowId, value) => field.onChange({ ...field.value, [rowId]: value })}
-              />
-            )}
+          <MultipleChoiceTable
+            title="Lenguajes de Programación"
+            subtitle="Nivel: 0 = Nulo, 5 = Dominado"
+            firstColumnLabel="Lenguaje"
+            options={skillLevelOptions}
+            rows={programmingLanguagesRows.map(r => ({ ...r, selectedValue: String(getValues(r.id as keyof FormState) || "0") }))}
+            onChange={(rowId, selectedValue) => handleTableChange(rowId, String(selectedValue))}
           />
 
-          <Controller
-            name="technicalSkills.devTechnologies"
-            control={control}
-            render={({ field }) => (
-                <MultipleChoiceTable
-                    title="Tecnologías de desarrollo"
-                    subtitle="Nivel de habilidad: 0 = Nulo, 1 = Básico, 2 = Inicial, 3 = Intermedio, 4 = Avanzado, 5 = Dominado"
-                    firstColumnLabel="Tecnología"
-                    options={skillLevelOptions}
-                    rows={devTechRows.map(row => ({
-                        ...row,
-                        selectedValue: field.value?.[row.id],
-                    }))}
-                    onChange={(rowId, value) => field.onChange({ ...field.value, [rowId]: value })}
-                />
-            )}
-            />
-
-            <Controller
-                name="technicalSkills.microcontrollers"
-                control={control}
-                render={({ field }) => (
-                    <MultipleChoiceTable
-                        title="Tecnologías de Desarrollo (Microcontroladores)"
-                        subtitle="Nivel de habilidad: 0 = Nulo, 1 = Básico, 2 = Inicial, 3 = Intermedio, 4 = Avanzado, 5 = Dominado"
-                        firstColumnLabel="Tecnología"
-                        options={skillLevelOptions}
-                        rows={microcontrollersRows.map(row => ({
-                        ...row,
-                        selectedValue: field.value?.[row.id],
-                    }))}
-                        onChange={(rowId, value) => field.onChange({ ...field.value, [rowId]: value })}
-                    />
-                )}
-            />
+          <MultipleChoiceTable
+            title="Tecnologías de desarrollo"
+            subtitle="Nivel: 0 = Nulo, 5 = Dominado"
+            firstColumnLabel="Tecnología"
+            options={skillLevelOptions}
+            rows={devTechRows.map(r => ({ ...r, selectedValue: String(getValues(r.id as keyof FormState) || "0") }))}
+            onChange={(rowId, selectedValue) => handleTableChange(rowId, String(selectedValue))}
+          />
           
-            <Controller
-                name="technicalSkills.developmentAreas"
-                control={control}
-                render={({ field }) => (
-                    <div>
-                        <h3 className="text-siafi-body font-bold text-gray-700">¿Áreas de desarrollo de interés?</h3>
-                        <p className="text-siafi-body italic text-gray-700 mb-4">(Puedes seleccionar más de una)</p>
-                        <div className="space-y-4">
-                        {developmentAreas.map(area => (
-                            <Checkbox
-                            key={area}
-                            label={area}
-                            checked={field.value?.includes(area) ?? false}
-                            onChange={() => {
-                                const currentAreas = field.value || [];
-                                const newAreas = currentAreas.includes(area)
-                                ? currentAreas.filter((a: string) => a !== area)
-                                : [...currentAreas, area];
-                                field.onChange(newAreas);
-                            }}
-                            />
-                        ))}
-                        </div>
-                    </div>
-                )}
-            />
+          <MultipleChoiceTable
+            title="Microcontroladores"
+            subtitle="Nivel: 0 = Nulo, 5 = Dominado"
+            firstColumnLabel="Tecnología"
+            options={skillLevelOptions}
+            rows={microcontrollersRows.map(r => ({ ...r, selectedValue: String(getValues(r.id as keyof FormState) || "0") }))}
+            onChange={(rowId, selectedValue) => handleTableChange(rowId, String(selectedValue))}
+          />
+
+          <Controller
+              name="development_areas"
+              control={control}
+              render={({ field }) => (
+                  <div>
+                      <h3 className="text-siafi-body font-bold text-gray-700">¿Áreas de desarrollo de interés?</h3>
+                      <p className="text-siafi-body italic text-gray-700 mb-4">(Puedes seleccionar más de una)</p>
+                      <div className="space-y-4">
+                      {developmentAreasOptions.map(area => (
+                          <Checkbox
+                          key={area.id}
+                          label={area.label}
+                          checked={field.value?.includes(area.id) ?? false}
+                          onChange={() => {
+                              const currentAreas = field.value || [];
+                              const newAreas = currentAreas.includes(area.id)
+                              ? currentAreas.filter((a: string) => a !== area.id)
+                              : [...currentAreas, area.id];
+                              field.onChange(newAreas);
+                          }}
+                          />
+                      ))}
+                      </div>
+                  </div>
+              )}
+          />
 
           <Textarea
-            label="Si seleccionaste 'Otro', cuéntanos más"
+            label="Si en las áreas de desarrollo seleccionaste 'Otro', cuéntanos más"
             placeholder="Escribe tu respuesta"
             fullWidth
             height="large"
-            {...register("technicalSkills.otherSkillsDetails")}
+            {...register("other_skills_text", {
+                maxLength: { value: 1000, message: "No exceder 1000 caracteres." }
+            })}
           />
-          <Textarea
-            label="¿Usas algún otro lenguaje o herramienta? (Incluye nivel)"
-            placeholder="Escribe tu respuesta"
-            fullWidth
-            height="large"
-            {...register("technicalSkills.otherTools")}
-          />
+           {errors.other_skills_text && <p className="text-red-500 text-sm mt-1">{errors.other_skills_text.message}</p>}
         </form>
 
         <div className="mt-8 space-y-3">

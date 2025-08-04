@@ -7,14 +7,19 @@ import { SiafiLogo } from "../../components/footer";
 import { Footer } from "../../layouts";
 import { type FormState } from "../../types/FormData";
 
-const areas = ["Organización", "Proyectos", "Difusión", "Capacitación"];
+const areas = [
+    { id: "proyectos", label: "Proyectos" },
+    { id: "organizacion", label: "Organización" },
+    { id: "difusion", label: "Difusión" },
+    { id: "capacitacion", label: "Capacitación" },
+];
 
 export function PreferencesAndParticipationPage() {
   const navigate = useNavigate();
   const { register, control, trigger, formState: { errors } } = useFormContext<FormState>();
 
   const handleContinue = async () => {
-    const isValid = await trigger(["preferences.interestedAreas", "preferences.participationReason"]);
+    const isValid = await trigger(["selected_nuclei", "contribution_text"]);
     if (isValid) {
       navigate('/reclutamiento/habilidades-tecnicas');
     }
@@ -34,9 +39,9 @@ export function PreferencesAndParticipationPage() {
         <form className="space-y-7" onSubmit={(e) => e.preventDefault()}>
           <div>
             <Controller
-              name="preferences.interestedAreas"
+              name="selected_nuclei"
               control={control}
-              rules={{ required: "Debes seleccionar al menos un área de interés." }}
+              rules={{ required: "Debes seleccionar al menos un núcleo.", minLength: { value: 1, message: "Debes seleccionar al menos un núcleo." } }}
               render={({ field }) => (
                 <div>
                   <label className="text-siafi-body-bold text-gray-700">
@@ -46,14 +51,14 @@ export function PreferencesAndParticipationPage() {
                   <div className="mt-4 space-y-4">
                     {areas.map((area) => (
                       <Checkbox
-                        key={area}
-                        label={area}
-                        checked={field.value?.includes(area) ?? false}
+                        key={area.id}
+                        label={area.label}
+                        checked={field.value?.includes(area.id) ?? false}
                         onChange={() => {
                           const currentAreas = field.value || [];
-                          const newAreas = currentAreas.includes(area)
-                            ? currentAreas.filter((a: string) => a !== area)
-                            : [...currentAreas, area];
+                          const newAreas = currentAreas.includes(area.id)
+                            ? currentAreas.filter((a: string) => a !== area.id)
+                            : [...currentAreas, area.id];
                           field.onChange(newAreas);
                         }}
                       />
@@ -62,7 +67,7 @@ export function PreferencesAndParticipationPage() {
                 </div>
               )}
             />
-            {errors.preferences?.interestedAreas && <p className="text-red-500 text-sm mt-1">{errors.preferences.interestedAreas.message}</p>}
+            {errors.selected_nuclei && <p className="text-red-500 text-sm mt-1">{errors.selected_nuclei.message}</p>}
           </div>
           <div>
             <Textarea
@@ -70,9 +75,13 @@ export function PreferencesAndParticipationPage() {
               placeholder="Escribe tu respuesta"
               fullWidth
               height="large"
-              {...register("preferences.participationReason", { required: "Este campo es obligatorio." })}
+              {...register("contribution_text", { 
+                required: "Este campo es obligatorio.",
+                minLength: { value: 10, message: "La respuesta debe tener al menos 10 caracteres." },
+                maxLength: { value: 1000, message: "La respuesta no debe exceder los 1000 caracteres." }
+              })}
             />
-            {errors.preferences?.participationReason && <p className="text-red-500 text-sm mt-1">{errors.preferences.participationReason.message}</p>}
+            {errors.contribution_text && <p className="text-red-500 text-sm mt-1">{errors.contribution_text.message}</p>}
           </div>
         </form>
 
