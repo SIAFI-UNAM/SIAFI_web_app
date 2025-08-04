@@ -1,4 +1,5 @@
 import React from 'react';
+import { SiafiLogo } from '../components/footer/SiafiLogo';
 
 interface FooterProps {
   className?: string;
@@ -20,9 +21,7 @@ export const Footer: React.FC<FooterProps> = ({
         <div className="flex flex-col md:flex-row gap-6 md:gap-0 items-center justify-between">
           
           <div className="flex flex-col md:flex-row gap-4 md:gap-4 items-center">
-            <div className="h-15 w-40 bg-siafi-primary flex items-center justify-center text-white font-siafi-poppins font-bold rounded">
-              SIAFI
-            </div>
+            <SiafiLogo size="sm" />
             
             <p className="hidden md:block text-siafi-caption text-siafi-on-surface leading-tight max-w-lg">
               ©{currentYear} SIAFI: Sociedad de Inteligencia Artificial de la Facultad de Ingeniería - UNAM
