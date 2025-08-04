@@ -117,7 +117,7 @@ export function PersonalDataPage() {
           <div>
             <Input
               label="Número de teléfono"
-              placeholder=""
+              placeholder="Tu número de teléfono"
               fullWidth
               type="tel"
               {...register("phone_number", { 
