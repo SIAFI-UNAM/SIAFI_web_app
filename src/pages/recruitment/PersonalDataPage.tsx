@@ -18,7 +18,6 @@ export function PersonalDataPage() {
       "email",
       "major",
       "semester",
-      "cv"
     ]);
     if (isValid) {
       navigate('/reclutamiento/preferencias-y-participacion');
@@ -125,7 +124,6 @@ export function PersonalDataPage() {
                 control={control}
                 name="cv"
                 rules={{ 
-                    required: "Tu CV en PDF es obligatorio.",
                     validate: {
                         isPdf: (file: File | null) => !file || file.type === "application/pdf" || "Solo se aceptan archivos PDF.",
                         maxSize: (file: File | null) => !file || file.size <= 10 * 1024 * 1024 || "El archivo no debe pesar más de 10MB."
@@ -133,7 +131,7 @@ export function PersonalDataPage() {
                 }}
                 render={({ field: { onChange, value, name, ref } }) => (
                     <FileInput
-                        label="Sube tu CV en PDF"
+                        label="Sube tu CV en PDF (Opcional)"
                         name={name}
                         value={value}
                         onChange={onChange}

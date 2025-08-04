@@ -44,33 +44,29 @@ export const useRecruitmentGuard = () => {
     const location = useLocation();
     const { watch } = useFormContext<FormState>();
 
-    // Observamos todos los campos para re-evaluar con datos frescos.
     const formData = watch();
 
     useEffect(() => {
-        // No ejecutar el guardián en la página de bienvenida.
         if (location.pathname === '/reclutamiento' || location.pathname === '/') {
             return;
         }
 
-        let firstIncompletePath = pagePaths[0]; // Por defecto, la primera página.
+        let firstIncompletePath = pagePaths[0]; 
 
         for (let i = 0; i < checks.length; i++) {
             if (!checks[i](formData)) {
                 firstIncompletePath = pagePaths[i];
                 break;
             }
-            // Si la sección actual está completa, el usuario puede acceder a la siguiente.
-            if (i === checks.length - 1) { // Todas las comprobaciones pasaron
-                firstIncompletePath = pagePaths[i + 1];
+            if (i === checks.length - 1) { 
+                firstIncompletePath = pagePaths[i + 1] || firstIncompletePath;
             }
         }
         
         const currentIndex = pagePaths.indexOf(location.pathname);
         const targetIndex = pagePaths.indexOf(firstIncompletePath);
-
-        // Si el usuario está más adelante de lo que debería, lo redirigimos.
-        if (currentIndex > targetIndex) {
+        
+        if (currentIndex > targetIndex && targetIndex > -1) {
             navigate(firstIncompletePath, { replace: true });
         }
     }, [location.pathname, navigate, formData]);
