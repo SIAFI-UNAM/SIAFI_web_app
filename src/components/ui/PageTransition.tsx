@@ -17,7 +17,7 @@ const pageTransition = {
   type: 'tween',
   ease: 'easeInOut',
   duration: 0.4,
-};
+} as const;
 
 interface PageTransitionProps {
   children: ReactNode;
