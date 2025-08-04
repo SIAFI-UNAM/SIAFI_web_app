@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useFormContext, Controller } from "react-hook-form";
+import { useState } from "react";
 import { Input, FileInput } from "../../components/forms";
 import { Button } from "../../components/ui";
 import { SiafiLogo } from "../../components/footer";
@@ -8,19 +9,67 @@ import { type FormState } from "../../types/FormData";
 
 export function PersonalDataPage() {
   const navigate = useNavigate();
-  const { register, trigger, control, formState: { errors } } = useFormContext<FormState>();
+  const { register, trigger, control, getValues, setError, formState: { errors } } = useFormContext<FormState>();
+  const [isVerifying, setIsVerifying] = useState(false);
 
   const handleContinue = async () => {
-    const isValid = await trigger([
-      "name",
-      "lastname",
-      "phone_number",
-      "email",
-      "major",
-      "semester",
+    const localValidation = await trigger([
+      "name", "lastname", "phone_number", "email", "major", "semester",
     ]);
-    if (isValid) {
-      navigate('/reclutamiento/preferencias-y-participacion');
+    if (!localValidation) return;
+
+    setIsVerifying(true);
+
+    const { email, phone_number, recruitment_event_id } = getValues();
+    let hasServerError = false;
+
+    try {
+      const [emailRes, phoneRes] = await Promise.all([
+        fetch('https://lfq5q7b8-8000.usw3.devtunnels.ms/api/v1/application/email/exists', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, recruitment_event_id }),
+        }),
+        fetch('https://lfq5q7b8-8000.usw3.devtunnels.ms/api/v1/application/phone_number/exists', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone_number, recruitment_event_id }),
+        })
+      ]);
+
+      if (emailRes.ok) {
+        const data = await emailRes.json();
+        if (data.exists) {
+          setError("email", { type: "manual", message: "Este correo electrónico ya está registrado." });
+          hasServerError = true;
+        }
+      } else if (emailRes.status !== 404) {
+        // Handle other non-404 errors for email check
+        setError("email", { type: "manual", message: "Error al verificar el correo." });
+        hasServerError = true;
+      }
+      
+      if (phoneRes.ok) {
+        const data = await phoneRes.json();
+        if (data.exists) {
+          setError("phone_number", { type: "manual", message: "Este número de teléfono ya está registrado." });
+          hasServerError = true;
+        }
+      } else if (phoneRes.status !== 404) {
+        // Handle other non-404 errors for phone check
+        setError("phone_number", { type: "manual", message: "Error al verificar el teléfono." });
+        hasServerError = true;
+      }
+
+    } catch (error) {
+      // Handle network errors
+      setError("root", { type: "manual", message: "Error de red, por favor intentalo de nuevo." });
+      hasServerError = true;
+    } finally {
+      setIsVerifying(false);
+      if (!hasServerError) {
+        navigate('/reclutamiento/preferencias-y-participacion');
+      }
     }
   };
 
@@ -148,17 +197,21 @@ export function PersonalDataPage() {
             variant="primary"
             fullWidth
             onClick={handleContinue}
+            loading={isVerifying}
+            disabled={isVerifying}
           >
-            Continuar
+            {isVerifying ? "Verificando..." : "Continuar"}
           </Button>
           <Button
             variant="secondary"
             fullWidth
             onClick={() => navigate('/reclutamiento')}
+            disabled={isVerifying}
           >
             Regresar
           </Button>
         </div>
+        {errors.root && <p className="text-red-500 text-sm mt-2 text-center">{errors.root.message}</p>}
 
         <div className="flex justify-center items-center space-x-2 mt-6">
           <div className="w-2 h-2 bg-siafi-primary rounded-full"></div>
