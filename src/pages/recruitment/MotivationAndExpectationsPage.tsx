@@ -93,7 +93,7 @@ export function MotivationAndExpectationsPage() {
                     loading={isSubmitting}
                     disabled={isSubmitting}
                 >
-                    {isSubmitting ? "Enviando..." : "Enviar Registro"}
+                    {isSubmitting ? "Enviando..." : "¡Enviar registro!"}
                 </Button>
                 <Button
                     variant="secondary"
