@@ -11,7 +11,6 @@ export function AppRouter() {
   return (
     <Router>
       <Routes>
-        <Route path="/reclutamiento" element={<WelcomePage />} />
         <Route path="/reclutamiento/informacion-personal" element={<PersonalDataPage />} />
         <Route path="/reclutamiento/preferencias-y-participacion" element={<PreferencesAndParticipationPage />} />
         <Route path="/reclutamiento/habilidades-tecnicas" element={<TechnicalSkillsPage />} />
