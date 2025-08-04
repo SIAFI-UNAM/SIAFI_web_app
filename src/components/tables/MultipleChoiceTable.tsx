@@ -42,7 +42,7 @@ export const MultipleChoiceTable = forwardRef<HTMLDivElement, MultipleChoiceTabl
   className = '',
   ...props
 }, ref) => {
-  const gridTemplateColumns = `2fr ${Array(options.length).fill('1fr').join(' ')}`;
+  const gridTemplateColumns = `minmax(10rem, 1.5fr) repeat(${options.length}, minmax(3.5rem, 1fr))`;
 
   const handleSelectionChange = (rowId: string, value: string) => {
     if (onChange) {
@@ -74,72 +74,74 @@ export const MultipleChoiceTable = forwardRef<HTMLDivElement, MultipleChoiceTabl
         </div>
       )}
 
-      <Table maxWidth={maxWidth}>
-        <TableHeader>
-          <TableRow 
-            isHeader 
-            style={{ gridTemplateColumns }}
-          >
-            <TableCell isHeader align="left">
-              {firstColumnLabel}
-            </TableCell>
-            
-            {options.map((option) => (
-              <TableCell
-                key={option.value}
-                isHeader
-                align="center"
-              >
-                {option.label}
+      <div className="overflow-x-auto w-full">
+        <Table maxWidth={maxWidth} className="min-w-[640px]">
+          <TableHeader>
+            <TableRow 
+              isHeader 
+              style={{ gridTemplateColumns }}
+            >
+              <TableCell isHeader align="left">
+                {firstColumnLabel}
               </TableCell>
-            ))}
-          </TableRow>
-        </TableHeader>
-
-        <TableBody>
-          {rows.length === 0 ? (
-            <TableRow style={{ gridTemplateColumns: '1fr' }}>
-              <TableCell align="center">
-                <span className="text-gray-500 text-siafi-body">
-                  No hay elementos disponibles
-                </span>
-              </TableCell>
+              
+              {options.map((option) => (
+                <TableCell
+                  key={option.value}
+                  isHeader
+                  align="center"
+                >
+                  {option.label}
+                </TableCell>
+              ))}
             </TableRow>
-          ) : (
-            rows.map((row, index) => (
-              <TableRow
-                key={row.id}
-                striped={striped && index % 2 === 1}
-                style={{ gridTemplateColumns }}
-              >
-                <TableCell align="left">
-                  <span className="text-siafi-body text-gray-900">
-                    {row.label}
+          </TableHeader>
+
+          <TableBody>
+            {rows.length === 0 ? (
+              <TableRow style={{ gridTemplateColumns: '1fr' }}>
+                <TableCell align="center">
+                  <span className="text-gray-500 text-siafi-body">
+                    No hay elementos disponibles
                   </span>
                 </TableCell>
-                
-                {options.map((option) => (
-                  <TableCell
-                    key={`${row.id}-${option.value}`}
-                    align="center"
-                    onClick={() => !row.disabled && handleSelectionChange(row.id, option.value.toString())}
-                    className={`transition-colors duration-150 ${!row.disabled ? 'cursor-pointer hover:bg-gray-50' : 'cursor-not-allowed'}`}
-                  >
-                    <RadioButton
-                      name={`choice-${row.id}`}
-                      value={option.value.toString()}
-                      checked={row.selectedValue?.toString() === option.value.toString()}
-                      disabled={row.disabled}
-                      onChange={(e) => handleSelectionChange(row.id, e.target.value)}
-                      containerClassName="justify-center pointer-events-none"
-                    />
-                  </TableCell>
-                ))}
               </TableRow>
-            ))
-          )}
-        </TableBody>
-      </Table>
+            ) : (
+              rows.map((row, index) => (
+                <TableRow
+                  key={row.id}
+                  striped={striped && index % 2 === 1}
+                  style={{ gridTemplateColumns }}
+                >
+                  <TableCell align="left">
+                    <span className="text-siafi-body text-gray-900">
+                      {row.label}
+                    </span>
+                  </TableCell>
+                  
+                  {options.map((option) => (
+                    <TableCell
+                      key={`${row.id}-${option.value}`}
+                      align="center"
+                      onClick={() => !row.disabled && handleSelectionChange(row.id, option.value.toString())}
+                      className={`transition-colors duration-150 ${!row.disabled ? 'cursor-pointer hover:bg-gray-50' : 'cursor-not-allowed'}`}
+                    >
+                      <RadioButton
+                        name={`choice-${row.id}`}
+                        value={option.value.toString()}
+                        checked={row.selectedValue?.toString() === option.value.toString()}
+                        disabled={row.disabled}
+                        onChange={(e) => handleSelectionChange(row.id, e.target.value)}
+                        containerClassName="justify-center pointer-events-none"
+                      />
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 });
