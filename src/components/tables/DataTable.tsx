@@ -1,6 +1,10 @@
 import { forwardRef } from 'react';
 import type { ReactNode } from 'react';
-import { Table, TableHeader, TableBody, TableRow, TableCell } from './Table';
+import { Table } from './Table';
+import { TableHeader } from './TableHeader';
+import { TableBody } from './TableBody';
+import { TableRow } from './TableRow';
+import { TableCell } from './TableCell';
 import { Badge } from '../ui';
 
 export interface DataTableColumn<T = any> {

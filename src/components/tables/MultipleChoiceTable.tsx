@@ -1,6 +1,10 @@
 import { forwardRef } from 'react';
 import type { HTMLAttributes } from 'react';
-import { Table, TableHeader, TableBody, TableRow, TableCell } from '../data';
+import { Table } from './Table';
+import { TableHeader } from './TableHeader';
+import { TableBody } from './TableBody';
+import { TableRow } from './TableRow';
+import { TableCell } from './TableCell';
 import { RadioButton } from '../forms';
 
 export interface MultipleChoiceOption {

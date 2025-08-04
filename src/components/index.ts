@@ -4,8 +4,8 @@ export * from './ui';
 // Form Components  
 export * from './forms';
 
-// Data Components
-export * from './data';
+// Tables Components
+export * from './tables';
 
 // Icons
 export * from './icons/index';
