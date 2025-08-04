@@ -1,9 +1,12 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
-import { PersonalDataPage } from '../pages/recruitment/PersonalDataPage'
-import { PreferencesAndParticipationPage } from '../pages/recruitment/PreferencesAndParticipationPage'
-import { TechnicalSkillsPage } from '../pages/recruitment/TechnicalSkillsPage'
-import { ExperienceAndTrackRecordPage } from '../pages/recruitment/ExperienceAndTrackRecordPage'
-import { MotivationAndExpectationsPage } from '../pages/recruitment/MotivationAndExpectationsPage'
+
+import { 
+  PersonalDataPage, 
+  PreferencesAndParticipationPage, 
+  TechnicalSkillsPage, 
+  ExperienceAndTrackRecordPage, 
+  MotivationAndExpectationsPage 
+} from '../pages/recruitment'
 import { ScrollToTop } from '../utils/ScrollToTop'
 
 export function AppRouter() {
