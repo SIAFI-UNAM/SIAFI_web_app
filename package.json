@@ -13,9 +13,12 @@
     "@tailwindcss/vite": "^4.1.11",
     "framer-motion": "^12.23.12",
     "react": "^19.1.0",
+    "react-confetti": "^6.4.0",
     "react-dom": "^19.1.0",
     "react-hook-form": "^7.62.0",
     "react-router-dom": "^7.7.1",
+    "react-simple-typewriter": "^5.0.1",
+    "react-use": "^17.6.0",
     "tailwindcss": "^4.1.11"
   },
   "devDependencies": {

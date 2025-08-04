@@ -7,6 +7,7 @@ import { PreferencesAndParticipationPage } from "../pages/recruitment/Preference
 import { TechnicalSkillsPage } from "../pages/recruitment/TechnicalSkillsPage";
 import { ExperienceAndTrackRecordPage } from "../pages/recruitment/ExperienceAndTrackRecordPage";
 import { MotivationAndExpectationsPage } from "../pages/recruitment/MotivationAndExpectationsPage";
+import { ThankYouPage } from "../pages/recruitment/ThankYouPage";
 import { RecruitmentLayout } from "../layouts/RecruitmentLayout"; 
 import { ScrollToTop } from "../utils/ScrollToTop";
 import { PageTransition } from "../components/ui";
@@ -27,6 +28,7 @@ function AnimatedRoutes() {
           <Route path="/reclutamiento/experiencia-y-trayectoria" element={<PageTransition><ExperienceAndTrackRecordPage /></PageTransition>} />
           <Route path="/reclutamiento/motivacion-y-expectativas" element={<PageTransition><MotivationAndExpectationsPage /></PageTransition>} />
         </Route>
+        <Route path="/reclutamiento/gracias" element={<PageTransition><ThankYouPage /></PageTransition>} />
       </Routes>
     </AnimatePresence>
   );

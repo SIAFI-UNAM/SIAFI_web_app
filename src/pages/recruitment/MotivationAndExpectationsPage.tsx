@@ -23,8 +23,11 @@ export function MotivationAndExpectationsPage() {
   const { register, control, handleSubmit: handleRHFSubmit, reset, formState: { errors } } = useFormContext<FormState>();
   const { submitForm, isSubmitting, submitError } = useRecruitmentContext();
 
-  const onFormSubmit = (data: FormState) => {
-    submitForm(data);
+  const onFormSubmit = async (data: FormState) => {
+    const success = await submitForm(data);
+    if (success) {
+      navigate('/reclutamiento/gracias');
+    }
   };
   
   const handleReset = () => {
