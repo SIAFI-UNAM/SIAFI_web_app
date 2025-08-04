@@ -123,6 +123,8 @@ export const MultipleChoiceTable = forwardRef<HTMLDivElement, MultipleChoiceTabl
                   <TableCell
                     key={`${row.id}-${option.value}`}
                     align="center"
+                    onClick={() => !row.disabled && handleSelectionChange(row.id, option.value.toString())}
+                    className={`transition-colors duration-150 ${!row.disabled ? 'cursor-pointer hover:bg-gray-50' : 'cursor-not-allowed'}`}
                   >
                     <RadioButton
                       name={`choice-${row.id}`}
@@ -130,7 +132,7 @@ export const MultipleChoiceTable = forwardRef<HTMLDivElement, MultipleChoiceTabl
                       checked={row.selectedValue?.toString() === option.value.toString()}
                       disabled={row.disabled}
                       onChange={(e) => handleSelectionChange(row.id, e.target.value)}
-                      containerClassName="justify-center"
+                      containerClassName="justify-center pointer-events-none"
                     />
                   </TableCell>
                 ))}
