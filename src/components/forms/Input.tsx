@@ -31,7 +31,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
   ...props
 }, ref) => {
   const [isFocused, setIsFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(!!props.value || !!props.defaultValue);
 
   const isError = variant === 'error' || !!error;
 
@@ -106,7 +105,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setHasValue(!!e.target.value);
     props.onChange?.(e);
   };
 

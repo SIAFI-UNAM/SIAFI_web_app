@@ -42,7 +42,6 @@ export const MultipleChoiceTable = forwardRef<HTMLDivElement, MultipleChoiceTabl
   className = '',
   ...props
 }, ref) => {
-  const totalColumns = options.length + 1;
   const gridTemplateColumns = `2fr ${Array(options.length).fill('1fr').join(' ')}`;
 
   const handleSelectionChange = (rowId: string, value: string) => {
