@@ -2,6 +2,9 @@ import React from 'react';
 import { SiafiLogo } from '../components/footer/SiafiLogo';
 import unamLogo from '../assets/UNAM_logo.svg';
 import fiLogo from '../assets/FI_logo.png';
+import instagramLogo from '../assets/Instagram_Logo.svg';
+import facebookLogo from '../assets/Facebook_Logo.png';
+import tiktokLogo from '../assets/TikTok_logo.png';
 
 interface FooterProps {
   className?: string;
@@ -31,20 +34,20 @@ export const Footer: React.FC<FooterProps> = ({
           </div>
           
           <div className="flex gap-5 items-center">
-            <a href="https://instagram.com/siafi_unam" target="_blank" rel="noopener noreferrer" 
-               className="w-6 h-6 bg-gradient-to-r from-purple-500 to-pink-500 rounded hover:from-purple-600 hover:to-pink-600 transition-all duration-200 focus:ring-2 focus:ring-siafi-primary" 
+            <a href="https://www.instagram.com/unam.siafi/" target="_blank" rel="noopener noreferrer"
+               className="w-6 h-6 rounded hover:opacity-80 transition-opacity duration-200 focus:ring-2 focus:ring-siafi-primary"
                aria-label="Síguenos en Instagram">
-              <span className="sr-only">Instagram</span>
+              <img src={instagramLogo} alt="Instagram" className="w-full h-full" />
             </a>
-            <a href="https://facebook.com/siafi_unam" target="_blank" rel="noopener noreferrer"
-               className="w-6 h-6 bg-blue-600 rounded hover:bg-blue-700 transition-colors duration-200 focus:ring-2 focus:ring-siafi-primary" 
+            <a href="https://facebook.com/UNAM.SIAFI" target="_blank" rel="noopener noreferrer"
+               className="w-6 h-6 rounded hover:opacity-80 transition-opacity duration-200 focus:ring-2 focus:ring-siafi-primary"
                aria-label="Síguenos en Facebook">
-              <span className="sr-only">Facebook</span>
+              <img src={facebookLogo} alt="Facebook" className="w-full h-full" />
             </a>
-            <a href="https://tiktok.com/@siafi_unam" target="_blank" rel="noopener noreferrer"
-               className="w-6 h-6 bg-black rounded hover:bg-gray-800 transition-colors duration-200 focus:ring-2 focus:ring-siafi-primary" 
+            <a href="https://www.tiktok.com/@siafi.unam" target="_blank" rel="noopener noreferrer"
+               className="w-6 h-6 rounded hover:opacity-80 transition-opacity duration-200 focus:ring-2 focus:ring-siafi-primary"
                aria-label="Síguenos en TikTok">
-              <span className="sr-only">TikTok</span>
+              <img src={tiktokLogo} alt="TikTok" className="w-full h-full" />
             </a>
           </div>
         </div>
