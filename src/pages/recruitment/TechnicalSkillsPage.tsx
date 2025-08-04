@@ -125,7 +125,7 @@ export function TechnicalSkillsPage() {
               control={control}
               render={({ field }) => (
                   <div>
-                      <h3 className="text-siafi-body font-bold text-gray-700">¿Áreas de desarrollo de interés?</h3>
+                      <h3 className="text-siafi-body font-bold text-gray-700">¿Áreas de desarrollo de interés? (Opcional)</h3>
                       <p className="text-siafi-body italic text-gray-700 mb-4">(Puedes seleccionar más de una)</p>
                       <div className="space-y-4">
                       {developmentAreasOptions.map(area => (
@@ -148,7 +148,7 @@ export function TechnicalSkillsPage() {
           />
 
           <Textarea
-            label="Si en las áreas de desarrollo seleccionaste 'Otro', cuéntanos más"
+            label="Si en las áreas de desarrollo seleccionaste 'Otro', cuéntanos más (Opcional)"
             placeholder="Escribe tu respuesta"
             fullWidth
             height="large"
