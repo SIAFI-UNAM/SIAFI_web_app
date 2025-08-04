@@ -75,7 +75,8 @@ export const RecruitmentFormProvider: React.FC<{ children: ReactNode }> = ({ chi
     formDataToSend.append('application_data_json', JSON.stringify(dataToSend));
 
     try {
-      const response = await fetch('https://lfq5q7b8-8000.usw3.devtunnels.ms/api/v1/applications', {
+      const apiURL = import.meta.env.VITE_API_URL;
+      const response = await fetch(`${apiURL}/api/v1/applications`, {
         method: 'POST',
         body: formDataToSend,
       });

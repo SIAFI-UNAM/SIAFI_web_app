@@ -24,13 +24,14 @@ export function PersonalDataPage() {
     let hasServerError = false;
 
     try {
+      const apiURL = import.meta.env.VITE_API_URL;
       const [emailRes, phoneRes] = await Promise.all([
-        fetch('https://lfq5q7b8-8000.usw3.devtunnels.ms/api/v1/application/email/exists', {
+        fetch(`${apiURL}/api/v1/application/email/exists`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, recruitment_event_id }),
         }),
-        fetch('https://lfq5q7b8-8000.usw3.devtunnels.ms/api/v1/application/phone_number/exists', {
+        fetch(`${apiURL}/api/v1/application/phone_number/exists`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ phone_number, recruitment_event_id }),
