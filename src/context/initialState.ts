@@ -10,6 +10,7 @@ export const getInitialState = (): FormState => {
           studentId: '',
           semester: null,
           career: '',
+          cv: null,
         },
         preferences: {
           interestedAreas: [],

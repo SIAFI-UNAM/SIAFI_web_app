@@ -1,1 +1,1 @@
-export { MailIcon, EyeIcon, EyeOffIcon, CheckIcon } from './icons.tsx';
+export * from './icons';

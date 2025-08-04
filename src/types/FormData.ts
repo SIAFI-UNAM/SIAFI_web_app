@@ -11,6 +11,7 @@ export interface FormData {
     studentId: string;
     semester: number | null;
     career: string;
+    cv: File | null;
   };
   preferences: {
     interestedAreas: string[];

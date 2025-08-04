@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { useFormContext } from "react-hook-form";
-import { Input } from "../../components/forms";
+import { useFormContext, Controller } from "react-hook-form";
+import { Input, FileInput } from "../../components/forms";
 import { Button } from "../../components/ui";
 import { SiafiLogo } from "../../components/footer";
 import { Footer } from "../../layouts";
@@ -8,7 +8,7 @@ import { type FormState } from "../../types/FormData";
 
 export function PersonalDataPage() {
   const navigate = useNavigate();
-  const { register, trigger, formState: { errors } } = useFormContext<FormState>();
+  const { register, trigger, control, formState: { errors } } = useFormContext<FormState>();
 
   const handleContinue = async () => {
     const isValid = await trigger([
@@ -18,7 +18,8 @@ export function PersonalDataPage() {
       "personalData.email",
       "personalData.studentId",
       "personalData.career",
-      "personalData.semester"
+      "personalData.semester",
+      "personalData.cv"
     ]);
     if (isValid) {
       navigate('/reclutamiento/preferencias-y-participacion');
@@ -117,6 +118,26 @@ export function PersonalDataPage() {
               })}
             />
             {errors.personalData?.semester && <p className="text-red-500 text-sm mt-1">{errors.personalData.semester.message}</p>}
+          </div>
+          <div>
+            <Controller
+                control={control}
+                name="personalData.cv"
+                rules={{ 
+                    required: "Tu CV en PDF es obligatorio.",
+                    validate: {
+                        isPdf: (file: File | null) => !file || file.type === "application/pdf" || "Solo se aceptan archivos PDF.",
+                        maxSize: (file: File | null) => !file || file.size <= 10 * 1024 * 1024 || "El archivo no debe pesar más de 10MB."
+                    }
+                }}
+                render={({ field: { onChange, onBlur, name, ref } }) => (
+                    <FileInput
+                        name={name}
+                        label="Sube tu CV en PDF"
+                    />
+                )}
+            />
+            {errors.personalData?.cv && <p className="text-red-500 text-sm mt-1">{errors.personalData.cv.message}</p>}
           </div>
         </form>
 
