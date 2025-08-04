@@ -1,0 +1,43 @@
+import { type FormState } from '../types/FormData';
+
+export const getInitialState = (): FormState => {
+  return {
+    recruitment_event_id: 1, // O el ID que corresponda
+    name: '',
+    lastname: '',
+    phone_number: '',
+    email: '',
+    major: '',
+    semester: null,
+    contribution_text: '',
+    soft_skills_text: '',
+    proud_moment_text: '',
+    team_inspiration_text: '',
+    why_join_text: '',
+    how_found_us_text: '',
+    expectations_text: '',
+    selected_nuclei: [],
+    additional_info_text: '',
+    other_skills_text: '',
+    previous_experience_text: '',
+    skill_csharp: null,
+    skill_c: null,
+    skill_cpp: null,
+    skill_java: null,
+    skill_javascript: null,
+    skill_python: null,
+    skill_tensorflow_keras: null,
+    skill_pytorch: null,
+    skill_scikit_learn: null,
+    skill_opencv: null,
+    skill_linux: null,
+    skill_ros_docker: null,
+    skill_raspberry: null,
+    skill_esp32: null,
+    skill_arduino: null,
+    skill_tiva: null,
+    development_areas: [],
+    detailed_experience_text: '',
+    cv: null,
+  };
+};

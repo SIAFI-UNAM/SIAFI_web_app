@@ -1,0 +1,6 @@
+export { WelcomePage } from './WelcomePage'
+export { PersonalDataPage } from './PersonalDataPage'
+export { PreferencesAndParticipationPage } from './PreferencesAndParticipationPage'
+export { TechnicalSkillsPage } from './TechnicalSkillsPage'
+export { ExperienceAndTrackRecordPage } from './ExperienceAndTrackRecordPage'
+export { MotivationAndExpectationsPage } from './MotivationAndExpectationsPage'

@@ -1,79 +1,105 @@
+import { useNavigate } from "react-router-dom";
+import { useFormContext, Controller } from "react-hook-form";
 import { Checkbox } from "../../components/forms/checkbox";
 import { Textarea } from "../../components/forms";
 import { Button } from "../../components/ui";
 import { SiafiLogo } from "../../components/footer";
 import { Footer } from "../../layouts";
-import { useNavigate } from "react-router-dom";
+import { type FormState } from "../../types/FormData";
+
+const areas = [
+    { id: "proyectos", label: "Proyectos" },
+    { id: "organizacion", label: "Organización" },
+    { id: "difusion", label: "Difusión" },
+    { id: "capacitacion", label: "Capacitación" },
+];
 
 export function PreferencesAndParticipationPage() {
   const navigate = useNavigate();
+  const { register, control, trigger, formState: { errors } } = useFormContext<FormState>();
+
+  const handleContinue = async () => {
+    const isValid = await trigger(["selected_nuclei", "contribution_text"]);
+    if (isValid) {
+      navigate('/reclutamiento/habilidades-tecnicas');
+    }
+  };
 
   return (
-    <div className="bg-siafi-surface flex flex-col items-center justify-center min-h-screen py-10 px-4 sm:px-6 lg:px-8">
+    <div className="bg-siafi-surface flex flex-col items-center justify-center min-h-screen py-16 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md">
-        <div className="flex justify-center mb-6">
-          <SiafiLogo />
-        </div>
-
+        <div className="flex justify-center mb-6"><SiafiLogo /></div>
         <div className="text-center mb-6">
-          <h1 className="text-siafi-h2 text-siafi-on-surface mb-2">
-            Preferencias y Participación
-          </h1>
+          <h1 className="text-siafi-h2 text-siafi-on-surface mb-2">Preferencias y Participación</h1>
           <p className="text-siafi-body text-siafi-on-surface">
-            Queremos saber cómo te gustaría contribuir en SIAFI y en qué áreas te interesa colaborar.
+            Queremos saber cómo te gustaría contribuir y en qué áreas te interesa colaborar.
           </p>
         </div>
 
-        <form className="space-y-7">
+        <form className="space-y-7" onSubmit={(e) => e.preventDefault()}>
           <div>
-            <label className="text-siafi-body text-gray-700 font-bold">
-              ¿En qué núcleo te gustaría colaborar activamente dentro de SIAFI?
-              <span className="font-normal italic"> (Puedes aplicar a más de uno, pero solo serás seleccionado en uno.)</span>
-            </label>
-            <div className="mt-4 space-y-4">
-              <Checkbox label="Organización" />
-              <Checkbox label="Proyectos" />
-              <Checkbox label="Difusión" />
-              <Checkbox label="Capacitación" />
-            </div>
+            <Controller
+              name="selected_nuclei"
+              control={control}
+              rules={{ required: "Debes seleccionar al menos un núcleo.", minLength: { value: 1, message: "Debes seleccionar al menos un núcleo." } }}
+              render={({ field }) => (
+                <div>
+                  <label className="text-siafi-body-bold text-gray-700">
+                    ¿En qué núcleo te gustaría colaborar?
+                    <span className="font-normal italic"> (Puedes seleccionar más de uno)</span>
+                  </label>
+                  <div className="mt-4 space-y-4">
+                    {areas.map((area) => (
+                      <Checkbox
+                        key={area.id}
+                        label={area.label}
+                        checked={field.value?.includes(area.id) ?? false}
+                        onChange={() => {
+                          const currentAreas = field.value || [];
+                          const newAreas = currentAreas.includes(area.id)
+                            ? currentAreas.filter((a: string) => a !== area.id)
+                            : [...currentAreas, area.id];
+                          field.onChange(newAreas);
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+            />
+            {errors.selected_nuclei && <p className="text-red-500 text-sm mt-1">{errors.selected_nuclei.message}</p>}
           </div>
-          <Textarea
-            label="¿Qué crees que podrías aportar al área o áreas seleccionadas?"
-            placeholder="Escribe tu respuesta"
-            fullWidth
-            height="large"
-          />
-          <Textarea
-            label="¿Cuáles son tus principales soft skills? (Por ejemplo: liderazgo, trabajo en equipo, comunicación, adaptabilidad, etc.)"
-            placeholder="Escribe tu respuesta"
-            fullWidth
-            height="large"
-          />
+          <div>
+            <Textarea
+              label="¿Qué crees que podrías aportar al área o áreas seleccionadas?"
+              placeholder="Escribe tu respuesta"
+              fullWidth
+              height="large"
+              {...register("contribution_text", { 
+                required: "Este campo es obligatorio.",
+                minLength: { value: 10, message: "La respuesta debe tener al menos 10 caracteres." },
+                maxLength: { value: 1000, message: "La respuesta no debe exceder los 1000 caracteres." }
+              })}
+            />
+            {errors.contribution_text && <p className="text-red-500 text-sm mt-1">{errors.contribution_text.message}</p>}
+          </div>
         </form>
 
         <div className="mt-8 space-y-3">
-          <Button
-            variant="primary"
-            fullWidth
-            onClick={() => navigate('/reclutamiento/habilidades-tecnicas')}
-          >
+          <Button variant="primary" fullWidth onClick={handleContinue}>
             Continuar
           </Button>
-          <Button
-            variant="secondary"
-            fullWidth
-            onClick={() => navigate('/reclutamiento/informacion-personal')}
-          >
+          <Button variant="secondary" fullWidth onClick={() => navigate('/reclutamiento/informacion-personal')}>
             Regresar
           </Button>
         </div>
         
         <div className="flex justify-center items-center space-x-2 mt-6">
-            <div className="w-1.5 h-1.5 bg-gray-300 rounded-full"></div>
-            <div className="w-2 h-2 bg-siafi-primary rounded-full"></div>
-            <div className="w-1.5 h-1.5 bg-gray-300 rounded-full"></div>
-            <div className="w-1.5 h-1.5 bg-gray-300 rounded-full"></div>
-            <div className="w-1.5 h-1.5 bg-gray-300 rounded-full"></div>
+          <div className="w-1.5 h-1.5 bg-gray-300 rounded-full"></div>
+          <div className="w-2 h-2 bg-siafi-primary rounded-full"></div>
+          <div className="w-1.5 h-1.5 bg-gray-300 rounded-full"></div>
+          <div className="w-1.5 h-1.5 bg-gray-300 rounded-full"></div>
+          <div className="w-1.5 h-1.5 bg-gray-300 rounded-full"></div>
         </div>
       </div>
       <div className="w-full max-w-6xl mx-auto pt-20">

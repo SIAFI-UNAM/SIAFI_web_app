@@ -2,7 +2,7 @@ import React from 'react';
 import type { ButtonHTMLAttributes } from 'react';
 import { Spinner } from './Spinner';
 
-type ButtonVariant = 'primary' | 'secondary';
+type ButtonVariant = 'primary' | 'secondary' | 'danger';
 type ButtonSize = 'medium';
 
 export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'type'> {
@@ -68,6 +68,12 @@ export const Button: React.FC<ButtonProps> = ({
       hover: 'hover:bg-gray-100 hover:border-siafi-primary-hover hover:text-siafi-primary-hover hover:transform hover:scale-[1.02] active:scale-[0.98]',
       disabled: 'bg-siafi-background text-siafi-primary/50 border-siafi-primary/50 cursor-not-allowed',
       loading: 'bg-gray-100 text-gray-500 border-gray-300 cursor-not-allowed',
+    },
+    danger: {
+      normal: 'bg-siafi-danger text-white focus:ring-siafi-danger cursor-pointer',
+      hover: 'hover:bg-siafi-danger-hover hover:transform hover:scale-[1.02] active:scale-[0.98]',
+      disabled: 'bg-siafi-danger/50 text-white cursor-not-allowed',
+      loading: 'bg-gray-100 text-gray-500 cursor-not-allowed',
     },
   };
 

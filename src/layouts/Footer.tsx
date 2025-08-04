@@ -1,4 +1,10 @@
 import React from 'react';
+import { SiafiLogo } from '../components/footer/SiafiLogo';
+import unamLogo from '../assets/UNAM_logo.svg';
+import fiLogo from '../assets/FI_logo.png';
+import instagramLogo from '../assets/Instagram_Logo.svg';
+import facebookLogo from '../assets/Facebook_Logo.png';
+import tiktokLogo from '../assets/TikTok_logo.png';
 
 interface FooterProps {
   className?: string;
@@ -20,9 +26,7 @@ export const Footer: React.FC<FooterProps> = ({
         <div className="flex flex-col md:flex-row gap-6 md:gap-0 items-center justify-between">
           
           <div className="flex flex-col md:flex-row gap-4 md:gap-4 items-center">
-            <div className="h-15 w-40 bg-siafi-primary flex items-center justify-center text-white font-siafi-poppins font-bold rounded">
-              SIAFI
-            </div>
+            <SiafiLogo size="sm" />
             
             <p className="hidden md:block text-siafi-caption text-siafi-on-surface leading-tight max-w-lg">
               ©{currentYear} SIAFI: Sociedad de Inteligencia Artificial de la Facultad de Ingeniería - UNAM
@@ -30,20 +34,20 @@ export const Footer: React.FC<FooterProps> = ({
           </div>
           
           <div className="flex gap-5 items-center">
-            <a href="https://instagram.com/siafi_unam" target="_blank" rel="noopener noreferrer" 
-               className="w-6 h-6 bg-gradient-to-r from-purple-500 to-pink-500 rounded hover:from-purple-600 hover:to-pink-600 transition-all duration-200 focus:ring-2 focus:ring-siafi-primary" 
+            <a href="https://www.instagram.com/unam.siafi/" target="_blank" rel="noopener noreferrer"
+               className="w-6 h-6 rounded hover:opacity-80 transition-opacity duration-200 focus:ring-2 focus:ring-siafi-primary"
                aria-label="Síguenos en Instagram">
-              <span className="sr-only">Instagram</span>
+              <img src={instagramLogo} alt="Instagram" className="w-full h-full" />
             </a>
-            <a href="https://facebook.com/siafi_unam" target="_blank" rel="noopener noreferrer"
-               className="w-6 h-6 bg-blue-600 rounded hover:bg-blue-700 transition-colors duration-200 focus:ring-2 focus:ring-siafi-primary" 
+            <a href="https://facebook.com/UNAM.SIAFI" target="_blank" rel="noopener noreferrer"
+               className="w-6 h-6 rounded hover:opacity-80 transition-opacity duration-200 focus:ring-2 focus:ring-siafi-primary"
                aria-label="Síguenos en Facebook">
-              <span className="sr-only">Facebook</span>
+              <img src={facebookLogo} alt="Facebook" className="w-full h-full" />
             </a>
-            <a href="https://tiktok.com/@siafi_unam" target="_blank" rel="noopener noreferrer"
-               className="w-6 h-6 bg-black rounded hover:bg-gray-800 transition-colors duration-200 focus:ring-2 focus:ring-siafi-primary" 
+            <a href="https://www.tiktok.com/@siafi.unam" target="_blank" rel="noopener noreferrer"
+               className="w-6 h-6 rounded hover:opacity-80 transition-opacity duration-200 focus:ring-2 focus:ring-siafi-primary"
                aria-label="Síguenos en TikTok">
-              <span className="sr-only">TikTok</span>
+              <img src={tiktokLogo} alt="TikTok" className="w-full h-full" />
             </a>
           </div>
         </div>
@@ -54,15 +58,19 @@ export const Footer: React.FC<FooterProps> = ({
           </p>
         </div>
         
-        <div className="flex gap-2.5 items-center justify-center md:justify-start mt-14">
-          <div className="h-[85px] w-[76px] bg-amber-500 flex items-center justify-center text-white text-xs font-siafi-poppins font-bold rounded-lg shadow-sm" 
-               title="Escudo de la Universidad Nacional Autónoma de México">
-            UNAM
-          </div>
-          <div className="h-24 w-[78px] bg-red-700 flex items-center justify-center text-white text-xs font-siafi-poppins font-bold rounded-lg shadow-sm"
-               title="Logo de la Facultad de Ingeniería UNAM">
-            INGENIERÍA
-          </div>
+        <div className="flex gap-3 items-center justify-center md:justify-start mt-14">
+          <img 
+            src={unamLogo} 
+            alt="Logo UNAM" 
+            className="w-[76px] h-auto"
+            title="Escudo de la Universidad Nacional Autónoma de México"
+          />
+          <img 
+            src={fiLogo} 
+            alt="Logo Facultad de Ingeniería" 
+            className="w-[74px] h-auto"
+            title="Logo de la Facultad de Ingeniería UNAM"
+          />
         </div>
       </div>
     </footer>
