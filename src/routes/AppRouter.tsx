@@ -11,14 +11,13 @@ export function AppRouter() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<App />} />
         <Route path="/reclutamiento" element={<WelcomePage />} />
         <Route path="/reclutamiento/informacion-personal" element={<PersonalDataPage />} />
         <Route path="/reclutamiento/preferencias-y-participacion" element={<PreferencesAndParticipationPage />} />
         <Route path="/reclutamiento/habilidades-tecnicas" element={<TechnicalSkillsPage />} />
         <Route path="/reclutamiento/experiencia-y-trayectoria" element={<ExperienceAndTrackRecordPage />} />
         <Route path="/reclutamiento/motivacion-y-expectativas" element={<MotivationAndExpectationsPage />} />
-        <Route path="*" element={<Navigate to="/reclutamiento" replace />} />
+        <Route path="*" element={<Navigate to="/reclutamiento/informacion-personal" replace />} />
       </Routes>
     </Router>
   )
