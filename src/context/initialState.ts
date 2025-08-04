@@ -4,6 +4,8 @@ export const getInitialState = (): FormState => {
     return {
         personalData: {
           name: '',
+          lastName: '',
+          phoneNumber: '',
           email: '',
           studentId: '',
           semester: null,

@@ -5,6 +5,8 @@ export interface Skill {
 export interface FormData {
   personalData: {
     name: string;
+    lastName: string;
+    phoneNumber: string;
     email: string;
     studentId: string;
     semester: number | null;

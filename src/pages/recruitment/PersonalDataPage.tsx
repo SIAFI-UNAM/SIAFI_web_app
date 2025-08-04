@@ -13,6 +13,8 @@ export function PersonalDataPage() {
   const handleContinue = async () => {
     const isValid = await trigger([
       "personalData.name",
+      "personalData.lastName",
+      "personalData.phoneNumber",
       "personalData.email",
       "personalData.studentId",
       "personalData.career",
@@ -37,12 +39,37 @@ export function PersonalDataPage() {
         <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
           <div>
             <Input
-              label="Nombre completo"
+              label="Nombre(s)"
               placeholder="Tu nombre"
               fullWidth
               {...register("personalData.name", { required: "El nombre es obligatorio." })}
             />
             {errors.personalData?.name && <p className="text-red-500 text-sm mt-1">{errors.personalData.name.message}</p>}
+          </div>
+          <div>
+            <Input
+              label="Apellido(s)"
+              placeholder="Tu apellido"
+              fullWidth
+              {...register("personalData.lastName", { required: "El apellido es obligatorio." })}
+            />
+            {errors.personalData?.lastName && <p className="text-red-500 text-sm mt-1">{errors.personalData.lastName.message}</p>}
+          </div>
+          <div>
+            <Input
+              label="Número de teléfono"
+              placeholder=""
+              fullWidth
+              type="tel"
+              {...register("personalData.phoneNumber", { 
+                  required: "El número de teléfono es obligatorio.",
+                  pattern: {
+                      value: /^[0-9]{10}$/,
+                      message: "Ingresa un número de 10 dígitos."
+                  }
+              })}
+            />
+            {errors.personalData?.phoneNumber && <p className="text-red-500 text-sm mt-1">{errors.personalData.phoneNumber.message}</p>}
           </div>
           <div>
             <Input
