@@ -142,5 +142,4 @@ export const MultipleChoiceTable = forwardRef<HTMLDivElement, MultipleChoiceTabl
     </div>
   );
 });
-
 MultipleChoiceTable.displayName = 'MultipleChoiceTable';
