@@ -1,15 +1,15 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
-import App from '../App'
 import { PersonalDataPage } from '../pages/recruitment/PersonalDataPage'
 import { PreferencesAndParticipationPage } from '../pages/recruitment/PreferencesAndParticipationPage'
 import { TechnicalSkillsPage } from '../pages/recruitment/TechnicalSkillsPage'
 import { ExperienceAndTrackRecordPage } from '../pages/recruitment/ExperienceAndTrackRecordPage'
 import { MotivationAndExpectationsPage } from '../pages/recruitment/MotivationAndExpectationsPage'
-import { WelcomePage } from '../pages/recruitment/WelcomePage'
+import { ScrollToTop } from '../utils/ScrollToTop'
 
 export function AppRouter() {
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
         <Route path="/reclutamiento/informacion-personal" element={<PersonalDataPage />} />
         <Route path="/reclutamiento/preferencias-y-participacion" element={<PreferencesAndParticipationPage />} />
