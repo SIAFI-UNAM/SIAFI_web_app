@@ -24,7 +24,7 @@ export function PersonalDataPage() {
   };
 
   return (
-    <div className="bg-siafi-surface flex flex-col items-center justify-center min-h-screen py-10 px-4 sm:px-6 lg:px-8">
+    <div className="bg-siafi-surface flex flex-col items-center justify-center min-h-screen py-16 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md">
         <div className="flex justify-center mb-6"><SiafiLogo /></div>
         <div className="text-center mb-6">
