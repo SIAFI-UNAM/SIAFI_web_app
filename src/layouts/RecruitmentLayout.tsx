@@ -4,5 +4,9 @@ import { useRecruitmentGuard } from '../hooks/useRecruitmentGuard';
 export function RecruitmentLayout() {
   useRecruitmentGuard();
 
-  return <Outlet />;
+  return (
+    <div style={{ position: 'relative' }}>
+      <Outlet />
+    </div>
+  );
 }

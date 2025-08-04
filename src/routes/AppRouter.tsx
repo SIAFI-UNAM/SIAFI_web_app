@@ -1,5 +1,6 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { RecruitmentFormProvider } from "../context/FormContext";
+import { AnimatePresence } from "framer-motion";
 import { WelcomePage } from "../pages/recruitment/WelcomePage";
 import { PersonalDataPage } from "../pages/recruitment/PersonalDataPage";
 import { PreferencesAndParticipationPage } from "../pages/recruitment/PreferencesAndParticipationPage";
@@ -8,24 +9,35 @@ import { ExperienceAndTrackRecordPage } from "../pages/recruitment/ExperienceAnd
 import { MotivationAndExpectationsPage } from "../pages/recruitment/MotivationAndExpectationsPage";
 import { RecruitmentLayout } from "../layouts/RecruitmentLayout"; 
 import { ScrollToTop } from "../utils/ScrollToTop";
+import { PageTransition } from "../components/ui";
+
+function AnimatedRoutes() {
+  const location = useLocation();
+
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<WelcomePage />} />
+        <Route path="/reclutamiento" element={<WelcomePage />} />
+
+        <Route element={<RecruitmentLayout />}>
+          <Route path="/reclutamiento/informacion-personal" element={<PageTransition><PersonalDataPage /></PageTransition>} />
+          <Route path="/reclutamiento/preferencias-y-participacion" element={<PageTransition><PreferencesAndParticipationPage /></PageTransition>} />
+          <Route path="/reclutamiento/habilidades-tecnicas" element={<PageTransition><TechnicalSkillsPage /></PageTransition>} />
+          <Route path="/reclutamiento/experiencia-y-trayectoria" element={<PageTransition><ExperienceAndTrackRecordPage /></PageTransition>} />
+          <Route path="/reclutamiento/motivacion-y-expectativas" element={<PageTransition><MotivationAndExpectationsPage /></PageTransition>} />
+        </Route>
+      </Routes>
+    </AnimatePresence>
+  );
+}
 
 export function AppRouter() {
   return (
     <Router>
       <RecruitmentFormProvider>
         <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<WelcomePage />} />
-          <Route path="/reclutamiento" element={<WelcomePage />} />
-
-          <Route element={<RecruitmentLayout />}>
-            <Route path="/reclutamiento/informacion-personal" element={<PersonalDataPage />} />
-            <Route path="/reclutamiento/preferencias-y-participacion" element={<PreferencesAndParticipationPage />} />
-            <Route path="/reclutamiento/habilidades-tecnicas" element={<TechnicalSkillsPage />} />
-            <Route path="/reclutamiento/experiencia-y-trayectoria" element={<ExperienceAndTrackRecordPage />} />
-            <Route path="/reclutamiento/motivacion-y-expectativas" element={<MotivationAndExpectationsPage />} />
-          </Route>
-        </Routes>
+        <AnimatedRoutes />
       </RecruitmentFormProvider>
     </Router>
   );
