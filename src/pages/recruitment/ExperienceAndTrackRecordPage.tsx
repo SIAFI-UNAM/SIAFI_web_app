@@ -1,11 +1,24 @@
+import { useNavigate } from "react-router-dom";
+import { useFormContext } from "react-hook-form";
 import { Textarea } from "../../components/forms";
 import { Button } from "../../components/ui";
 import { SiafiLogo } from "../../components/footer";
 import { Footer } from "../../layouts";
-import { useNavigate } from "react-router-dom";
+import { type FormState } from "../../types/FormData";
 
 export function ExperienceAndTrackRecordPage() {
   const navigate = useNavigate();
+  const { register, trigger } = useFormContext<FormState>();
+
+  const handleContinue = async () => {
+    const isValid = await trigger([
+      "experience.previousExperience",
+      "experience.projects"
+    ]);
+    if (isValid) {
+      navigate('/reclutamiento/motivacion-y-expectativas');
+    }
+  };
 
   return (
     <div className="bg-siafi-surface flex flex-col items-center justify-center min-h-screen py-10 px-4 sm:px-6 lg:px-8">
@@ -19,28 +32,24 @@ export function ExperienceAndTrackRecordPage() {
             Experiencia y Trayectoria
           </h1>
           <p className="text-siafi-body text-siafi-on-surface">
-            Cuéntanos sobre tu experiencia previa en proyectos, grupos estudiantiles o logros relevantes.
+            Cuéntanos sobre tu experiencia previa en proyectos, grupos o logros relevantes.
           </p>
         </div>
 
-        <form className="space-y-7">
+        <form className="space-y-7" onSubmit={(e) => e.preventDefault()}>
           <Textarea
             label="¿Has sido parte de alguna sociedad, grupo estudiantil o proyecto relacionado con IA?"
             placeholder="Escribe tu respuesta"
             fullWidth
             height="large"
+            {...register("experience.previousExperience")}
           />
           <Textarea
-            label="Platícanos de un evento personal o profesional del que te sientas orgulloso. ¿Cuál fue tu participación y qué impacto tuvo?"
+            label="Platícanos de un evento personal o profesional del que te sientas orgulloso."
             placeholder="Escribe tu respuesta"
             fullWidth
             height="large"
-          />
-          <Textarea
-            label="Cuéntanos de una ocasión en la que motivaste a tu equipo a trabajar de una nueva manera. ¿Qué cambio propusiste y qué resultados obtuviste?"
-            placeholder="Escribe tu respuesta"
-            fullWidth
-            height="large"
+            {...register("experience.projects")}
           />
         </form>
 
@@ -48,7 +57,7 @@ export function ExperienceAndTrackRecordPage() {
           <Button
             variant="primary"
             fullWidth
-            onClick={() => navigate('/reclutamiento/motivacion-y-expectativas')}
+            onClick={handleContinue}
           >
             Continuar
           </Button>

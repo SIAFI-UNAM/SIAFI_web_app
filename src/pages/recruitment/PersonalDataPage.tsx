@@ -1,56 +1,103 @@
-import { Input } from "../../components/forms"
-import { Button } from "../../components/ui"
-import { SiafiLogo } from "../../components/footer"
-import { Footer } from "../../layouts"
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+import { useFormContext } from "react-hook-form";
+import { Input } from "../../components/forms";
+import { Button } from "../../components/ui";
+import { SiafiLogo } from "../../components/footer";
+import { Footer } from "../../layouts";
+import { type FormState } from "../../types/FormData";
 
 export function PersonalDataPage() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const { register, trigger, formState: { errors } } = useFormContext<FormState>();
+
+  const handleContinue = async () => {
+    const isValid = await trigger([
+      "personalData.name",
+      "personalData.email",
+      "personalData.studentId",
+      "personalData.career",
+      "personalData.semester"
+    ]);
+    if (isValid) {
+      navigate('/reclutamiento/preferencias-y-participacion');
+    }
+  };
 
   return (
     <div className="bg-siafi-surface flex flex-col items-center justify-center min-h-screen py-10 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md">
-        <div className="flex justify-center mb-6">
-          <SiafiLogo />
-        </div>
-
+        <div className="flex justify-center mb-6"><SiafiLogo /></div>
         <div className="text-center mb-6">
-          <h1 className="text-siafi-h2 text-siafi-on-surface mb-2">
-            Información Personal
-          </h1>
+          <h1 className="text-siafi-h2 text-siafi-on-surface mb-2">Información Personal</h1>
           <p className="text-siafi-body text-siafi-on-surface">
-            Esta información nos ayudará a conocerte y mantenernos en contacto contigo durante el proceso de reclutamiento.
+            Esta información nos ayudará a conocerte y mantenernos en contacto.
           </p>
         </div>
 
-        <form className="space-y-6">
-          <Input
-            label="Nombre completo"
-            placeholder="Tu nombre"
-            fullWidth
-          />
-          <Input
-            label="Carrera"
-            placeholder="Ingeniería en computación"
-            fullWidth
-          />
-          <Input
-            label="Semestre actual"
-            placeholder="Séptimo"
-            fullWidth
-          />
-          <Input
-            label="Número telefónico"
-            placeholder="Tu número de teléfono"
-            fullWidth
-          />
+        <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+          <div>
+            <Input
+              label="Nombre completo"
+              placeholder="Tu nombre"
+              fullWidth
+              {...register("personalData.name", { required: "El nombre es obligatorio." })}
+            />
+            {errors.personalData?.name && <p className="text-red-500 text-sm mt-1">{errors.personalData.name.message}</p>}
+          </div>
+          <div>
+            <Input
+              label="Correo electrónico"
+              placeholder="tu.correo@dominio.com"
+              fullWidth
+              type="email"
+              {...register("personalData.email", { 
+                  required: "El correo es obligatorio.",
+                  pattern: {
+                      value: /\S+@\S+\.\S+/,
+                      message: "El formato del correo no es válido."
+                  }
+              })}
+            />
+            {errors.personalData?.email && <p className="text-red-500 text-sm mt-1">{errors.personalData.email.message}</p>}
+          </div>
+          <div>
+            <Input
+              label="Número de cuenta"
+              placeholder="31..."
+              fullWidth
+              {...register("personalData.studentId", { required: "El número de cuenta es obligatorio." })}
+            />
+            {errors.personalData?.studentId && <p className="text-red-500 text-sm mt-1">{errors.personalData.studentId.message}</p>}
+          </div>
+          <div>
+            <Input
+              label="Carrera"
+              placeholder="Ingeniería en Computación"
+              fullWidth
+              {...register("personalData.career", { required: "La carrera es obligatoria." })}
+            />
+            {errors.personalData?.career && <p className="text-red-500 text-sm mt-1">{errors.personalData.career.message}</p>}
+          </div>
+          <div>
+            <Input
+              label="Semestre actual"
+              placeholder="7"
+              fullWidth
+              type="number"
+              {...register("personalData.semester", { 
+                  required: "El semestre es obligatorio.",
+                  valueAsNumber: true 
+              })}
+            />
+            {errors.personalData?.semester && <p className="text-red-500 text-sm mt-1">{errors.personalData.semester.message}</p>}
+          </div>
         </form>
 
         <div className="mt-8 space-y-3">
           <Button
             variant="primary"
             fullWidth
-            onClick={() => navigate('/reclutamiento/preferencias-y-participacion')}
+            onClick={handleContinue}
           >
             Continuar
           </Button>
@@ -75,5 +122,5 @@ export function PersonalDataPage() {
         <Footer />
       </div>
     </div>
-  )
+  );
 }

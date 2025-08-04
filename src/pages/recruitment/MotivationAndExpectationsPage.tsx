@@ -1,83 +1,110 @@
+import { useNavigate } from "react-router-dom";
+import { useFormContext, Controller } from "react-hook-form";
 import { Textarea, RadioGroup } from "../../components/forms";
 import { Button } from "../../components/ui";
 import { SiafiLogo } from "../../components/footer";
 import { Footer } from "../../layouts";
-import { useNavigate } from "react-router-dom";
+import { useRecruitmentContext } from "../../context/FormContext";
+import { type FormState } from "../../types/FormData";
 
 const recruitmentSources = [
-  { value: "social-media", label: "Redes sociales (Instagram, Tiktok, Facebook)" },
+  { value: "social-media", label: "Redes sociales" },
   { value: "email", label: "Correo institucional" },
   { value: "poster", label: "Cartel en la Facultad" },
-  { value: "class", label: "Clase o profesor/a lo mencionó" },
-  { value: "event", label: "Asistí a un evento de SIAFI" },
-  { value: "fair", label: "Feria de asociaciones estudiantiles" },
-  { value: "other", label: "Otros: _____________________________________________" },
-]
+  { value: "class", label: "Un profesor/a lo mencionó" },
+  { value: "event", label: "Evento de SIAFI" },
+  { value: "fair", label: "Feria de asociaciones" },
+  { value: "other", label: "Otro" },
+];
 
 export function MotivationAndExpectationsPage() {
   const navigate = useNavigate();
+  const { register, control, handleSubmit: handleRHFSubmit, reset } = useFormContext<FormState>();
+  const { submitForm, isSubmitting, submitError } = useRecruitmentContext();
+
+  const onFormSubmit = (data: FormState) => {
+    submitForm(data);
+  };
+  
+  const handleReset = () => {
+    reset();
+    localStorage.removeItem('formData');
+  }
 
   return (
     <div className="bg-siafi-surface flex flex-col items-center justify-center min-h-screen py-10 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md">
-        <div className="flex justify-center mb-6">
-          <SiafiLogo />
-        </div>
-
+        <div className="flex justify-center mb-6"><SiafiLogo /></div>
         <div className="text-center mb-6">
-          <h1 className="text-siafi-h2 text-siafi-on-surface mb-2">
-            Motivación y Expectativas
-          </h1>
+          <h1 className="text-siafi-h2 text-siafi-on-surface mb-2">Motivación y Expectativas</h1>
           <p className="text-siafi-body text-siafi-on-surface">
-            Queremos saber qué te mueve a formar parte de SIAFI y qué esperas de esta experiencia.
+            Cuéntanos qué te mueve a formar parte de SIAFI.
           </p>
         </div>
 
-        <form className="space-y-7">
+        <form className="space-y-7" onSubmit={handleRHFSubmit(onFormSubmit)}>
           <Textarea
             label="¿Por qué te interesa ser parte de SIAFI y qué crees que puedes aportar?"
             placeholder="Escribe tu respuesta"
             fullWidth
             height="large"
+            {...register("motivation.learningExpectations", { required: "Este campo es obligatorio." })}
           />
           <Textarea
             label="¿Cuáles son tus expectativas al unirte a SIAFI?"
             placeholder="Escribe tu respuesta"
             fullWidth
             height="large"
+            {...register("motivation.commitment", { required: "Este campo es obligatorio." })}
           />
-
-          <RadioGroup
-            title="¿Cómo te enteraste del proceso de reclutamiento?"
-            name="recruitment-source"
-            options={recruitmentSources}
+          <Controller
+            name="motivation.recruitmentSource"
+            control={control}
+            rules={{ required: "Por favor, selecciona una opción." }}
+            render={({ field }) => (
+                <RadioGroup
+                    title="¿Cómo te enteraste del reclutamiento?"
+                    name={field.name}
+                    options={recruitmentSources}
+                    value={field.value}
+                    onChange={(value) => field.onChange(value)}
+                />
+            )}
           />
-
-          <Textarea
-            label="¿Hay algún dato adicional que te gustaría compartir con nosotros?"
-            placeholder="Escribe tu respuesta"
-            fullWidth
-            height="large"
-          />
+        
+            <div className="mt-8 space-y-3">
+                {submitError && (
+                    <div className="text-red-500 text-center p-2 bg-red-100 border border-red-400 rounded">
+                    {submitError}
+                    </div>
+                )}
+                <Button
+                    variant="primary"
+                    fullWidth
+                    type="submit"
+                    loading={isSubmitting}
+                    disabled={isSubmitting}
+                >
+                    {isSubmitting ? "Enviando..." : "Enviar Registro"}
+                </Button>
+                <Button
+                    variant="secondary"
+                    fullWidth
+                    onClick={() => navigate('/reclutamiento/experiencia-y-trayectoria')}
+                    disabled={isSubmitting}
+                >
+                    Regresar
+                </Button>
+                <Button
+                    variant="danger"
+                    fullWidth
+                    onClick={handleReset}
+                    disabled={isSubmitting}
+                >
+                    Reiniciar Formulario
+                </Button>
+            </div>
         </form>
-
-        <div className="mt-8 space-y-3">
-          <Button
-            variant="primary"
-            fullWidth
-            type="submit"
-            onClick={() => navigate('/')}
-          >
-            Enviar
-          </Button>
-          <Button
-            variant="secondary"
-            fullWidth
-            onClick={() => navigate('/reclutamiento/experiencia-y-trayectoria')}
-          >
-            Regresar
-          </Button>
-        </div>
 
         <div className="flex justify-center items-center space-x-2 mt-6">
           <div className="w-1.5 h-1.5 bg-gray-300 rounded-full"></div>
@@ -91,5 +118,5 @@ export function MotivationAndExpectationsPage() {
         <Footer />
       </div>
     </div>
-  )
+  );
 }
