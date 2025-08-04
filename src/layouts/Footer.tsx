@@ -35,17 +35,17 @@ export const Footer: React.FC<FooterProps> = ({
           
           <div className="flex gap-5 items-center">
             <a href="https://www.instagram.com/unam.siafi/" target="_blank" rel="noopener noreferrer"
-               className="w-6 h-6 rounded hover:opacity-80 transition-opacity duration-200 focus:ring-2 focus:ring-siafi-primary"
+               className="w-9 h-9 rounded hover:opacity-80 transition-opacity duration-200 focus:ring-2 focus:ring-siafi-primary"
                aria-label="Síguenos en Instagram">
               <img src={instagramLogo} alt="Instagram" className="w-full h-full" />
             </a>
             <a href="https://facebook.com/UNAM.SIAFI" target="_blank" rel="noopener noreferrer"
-               className="w-6 h-6 rounded hover:opacity-80 transition-opacity duration-200 focus:ring-2 focus:ring-siafi-primary"
+               className="w-9 h-9 rounded hover:opacity-80 transition-opacity duration-200 focus:ring-2 focus:ring-siafi-primary"
                aria-label="Síguenos en Facebook">
               <img src={facebookLogo} alt="Facebook" className="w-full h-full" />
             </a>
             <a href="https://www.tiktok.com/@siafi.unam" target="_blank" rel="noopener noreferrer"
-               className="w-6 h-6 rounded hover:opacity-80 transition-opacity duration-200 focus:ring-2 focus:ring-siafi-primary"
+               className="w-9 h-9 rounded hover:opacity-80 transition-opacity duration-200 focus:ring-2 focus:ring-siafi-primary"
                aria-label="Síguenos en TikTok">
               <img src={tiktokLogo} alt="TikTok" className="w-full h-full" />
             </a>
