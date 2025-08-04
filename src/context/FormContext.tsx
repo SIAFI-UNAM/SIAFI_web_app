@@ -4,7 +4,7 @@ import { type FormState } from '../types/FormData';
 import { getInitialState } from './initialState';
 
 interface RecruitmentFormContextProps {
-  submitForm: (data: FormState) => Promise<void>;
+  submitForm: (data: FormState) => Promise<boolean>;
   isSubmitting: boolean;
   submitError: string | null;
 }
@@ -59,7 +59,7 @@ export const RecruitmentFormProvider: React.FC<{ children: ReactNode }> = ({ chi
     return () => subscription.unsubscribe();
   }, [watch]);
   
-  const submitForm = async (data: FormState) => {
+  const submitForm = async (data: FormState): Promise<boolean> => {
     setIsSubmitting(true);
     setSubmitError(null);
 
@@ -82,14 +82,15 @@ export const RecruitmentFormProvider: React.FC<{ children: ReactNode }> = ({ chi
       });
 
       if (response.ok) {
-        reset(getInitialState());
-        localStorage.removeItem('formData');
+        return true;
       } else {
         const errorData = await response.json().catch(() => ({ message: 'Error al enviar el formulario.' }));
         setSubmitError(errorData.detail || errorData.message || 'Ocurrió un error inesperado.');
+        return false;
       }
     } catch (error: any) {
       setSubmitError(error.message || 'Error de red. Inténtalo de nuevo.');
+      return false;
     } finally {
       setIsSubmitting(false);
     }
