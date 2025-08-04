@@ -5,30 +5,40 @@ import { Button } from "../../components/ui";
 import { SiafiLogo } from "../../components/footer";
 import { Footer } from "../../layouts";
 import { useNavigate } from "react-router-dom";
+import { type MultipleChoiceOption, type MultipleChoiceRow } from "../../components/tables";
 
-const programmingLanguagesRows = [
-  { label: "Python", name: "python-skill", options: [{value: "0", label: ""}, {value: "1", label: ""}, {value: "2", label: ""}, {value: "3", label: ""}, {value: "4", label: ""}, {value: "5", label: ""}] },
-  { label: "JavaScript", name: "javascript-skill", options: [{value: "0", label: ""}, {value: "1", label: ""}, {value: "2", label: ""}, {value: "3", label: ""}, {value: "4", label: ""}, {value: "5", label: ""}] },
-  { label: "TypeScript", name: "typescript-skill", options: [{value: "0", label: ""}, {value: "1", label: ""}, {value: "2", label: ""}, {value: "3", label: ""}, {value: "4", label: ""}, {value: "5", label: ""}] },
-  { label: "C/C++", name: "c-skill", options: [{value: "0", label: ""}, {value: "1", label: ""}, {value: "2", label: ""}, {value: "3", label: ""}, {value: "4", label: ""}, {value: "5", label: ""}] },
-  { label: "C#", name: "csharp-skill", options: [{value: "0", label: ""}, {value: "1", label: ""}, {value: "2", label: ""}, {value: "3", label: ""}, {value: "4", label: ""}, {value: "5", label: ""}] },
-  { label: "Java", name: "java-skill", options: [{value: "0", label: ""}, {value: "1", label: ""}, {value: "2", label: ""}, {value: "3", label: ""}, {value: "4", label: ""}, {value: "5", label: ""}] },
+const skillLevelOptions: MultipleChoiceOption[] = [
+    { value: "0", label: "0" },
+    { value: "1", label: "1" },
+    { value: "2", label: "2" },
+    { value: "3", label: "3" },
+    { value: "4", label: "4" },
+    { value: "5", label: "5" },
 ];
 
-const devTechRows = [
-    { label: "PyTorch", name: "pytorch-skill", options: [{value: "0", label: ""}, {value: "1", label: ""}, {value: "2", label: ""}, {value: "3", label: ""}, {value: "4", label: ""}, {value: "5", label: ""}] },
-    { label: "Tensorflow/Keras", name: "tensorflow-skill", options: [{value: "0", label: ""}, {value: "1", label: ""}, {value: "2", label: ""}, {value: "3", label: ""}, {value: "4", label: ""}, {value: "5", label: ""}] },
-    { label: "Scikit-Learn", name: "scikit-skill", options: [{value: "0", label: ""}, {value: "1", label: ""}, {value: "2", label: ""}, {value: "3", label: ""}, {value: "4-", label: ""}, {value: "5", label: ""}] },
-    { label: "OpenCV", name: "opencv-skill", options: [{value: "0", label: ""}, {value: "1", label: ""}, {value: "2", label: ""}, {value: "3", label: ""}, {value: "4", label: ""}, {value: "5", label: ""}] },
-    { label: "Linux", name: "linux-skill", options: [{value: "0", label: ""}, {value: "1", label: ""}, {value: "2", label: ""}, {value: "3", label: ""}, {value: "4", label: ""}, {value: "5", label: ""}] },
-    { label: "ROS", name: "ros-skill", options: [{value: "0", label: ""}, {value: "1", label: ""}, {value: "2", label: ""}, {value: "3", label: ""}, {value: "4", label: ""}, {value: "5", label: ""}] },
+const programmingLanguagesRows: MultipleChoiceRow[] = [
+  { id: "python-skill", label: "Python" },
+  { id: "javascript-skill", label: "JavaScript" },
+  { id: "typescript-skill", label: "TypeScript" },
+  { id: "c-skill", label: "C/C++" },
+  { id: "csharp-skill", label: "C#" },
+  { id: "java-skill", label: "Java" },
 ];
 
-const microcontrollersRows = [
-    { label: "Raspberry Pi", name: "raspberry-skill", options: [{value: "0", label: ""}, {value: "1", label: ""}, {value: "2", label: ""}, {value: "3", label: ""}, {value: "4", label: ""}, {value: "5", label: ""}] },
-    { label: "ESP32", name: "esp32-skill", options: [{value: "0", label: ""}, {value: "1", label: ""}, {value: "2", label: ""}, {value: "3", label: ""}, {value: "4", label: ""}, {value: "5", label: ""}] },
-    { label: "Tiva", name: "tiva-skill", options: [{value: "0", label: ""}, {value: "1", label: ""}, {value: "2", label: ""}, {value: "3", label: ""}, {value: "4", label: ""}, {value: "5", label: ""}] },
-    { label: "TM4C1294NCPDT", name: "tm4c-skill", options: [{value: "0", label: ""}, {value: "1", label: ""}, {value: "2", label: ""}, {value: "3", label: ""}, {value: "4", label: ""}, {value: "5", label: ""}] },
+const devTechRows: MultipleChoiceRow[] = [
+    { id: "pytorch-skill", label: "PyTorch" },
+    { id: "tensorflow-skill", label: "Tensorflow/Keras" },
+    { id: "scikit-skill", label: "Scikit-Learn" },
+    { id: "opencv-skill", label: "OpenCV" },
+    { id: "linux-skill", label: "Linux" },
+    { id: "ros-skill", label: "ROS" },
+];
+
+const microcontrollersRows: MultipleChoiceRow[] = [
+    { id: "raspberry-skill", label: "Raspberry Pi" },
+    { id: "esp32-skill", label: "ESP32" },
+    { id: "tiva-skill", label: "Tiva" },
+    { id: "tm4c-skill", label: "TM4C1294NCPDT" },
 ];
 
 
@@ -55,19 +65,22 @@ export function TechnicalSkillsPage() {
           <MultipleChoiceTable
             title="Lenguajes de Programación"
             subtitle="Nivel de habilidad: 0 = Nulo, 1 = Básico, 2 = Inicial, 3 = Intermedio, 4 = Avanzado, 5 = Dominado"
-            headers={["Lenguaje", "0", "1", "2", "3", "4", "5"]}
+            firstColumnLabel="Lenguaje"
+            options={skillLevelOptions}
             rows={programmingLanguagesRows}
           />
           <MultipleChoiceTable
             title="Tecnologías de desarrollo"
             subtitle="Nivel de habilidad: 0 = Nulo, 1 = Básico, 2 = Inicial, 3 = Intermedio, 4 = Avanzado, 5 = Dominado"
-            headers={["Tecnología", "0", "1", "2", "3", "4", "5"]}
+            firstColumnLabel="Tecnología"
+            options={skillLevelOptions}
             rows={devTechRows}
           />
           <MultipleChoiceTable
             title="Tecnologías de Desarrollo (Microcontroladores)"
             subtitle="Nivel de habilidad: 0 = Nulo, 1 = Básico, 2 = Inicial, 3 = Intermedio, 4 = Avanzado, 5 = Dominado"
-            headers={["Tecnología", "0", "1", "2", "3", "4", "5"]}
+            firstColumnLabel="Tecnología"
+            options={skillLevelOptions}
             rows={microcontrollersRows}
           />
           <div>
