@@ -7,8 +7,10 @@ function App() {
     <RecruitmentFormProvider>
       
         <AppRouter />
+
     </RecruitmentFormProvider>
   );
 }
 
 export default App;
+erikyvanov
