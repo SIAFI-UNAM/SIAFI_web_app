@@ -2,7 +2,7 @@ import { type FormState } from '../types/FormData';
 
 export const getInitialState = (): FormState => {
   return {
-    recruitment_event_id: 1, // O el ID que corresponda
+    recruitment_event_id: Number(import.meta.env.VITE_RECRUITMENT_EVENT_ID) || 1,
     name: '',
     lastname: '',
     phone_number: '',
